@@ -5,19 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NOX Exhibition Center - Unit Economics</title>
 <style>
-:root{--nox-ink:#1a1a18;--nox-green:#0F6E56;--nox-green-d:#0a5042;--nox-blue:#185FA5;--nox-cream:#f0efe9;--nox-muted:#6b6b68}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:linear-gradient(180deg,#e8ebe6 0%,var(--nox-cream) 48%,#eceae4 100%);color:var(--nox-ink);font-size:14px;min-height:100vh}
-.nox-logo-img{display:block;flex-shrink:0;object-fit:contain;object-position:left center}
-.nox-logo-img--bar{height:38px;width:auto;max-width:200px}
-.nox-brand-stack{display:flex;flex-direction:column;gap:2px;min-width:0}
-.nox-logo-img--hero{height:clamp(52px,14vw,88px);width:auto;max-width:min(320px,100%)}
-.nox-header-bar{background:linear-gradient(180deg,#252522 0%,#1a1a18 100%);border-bottom:3px solid var(--nox-green);box-shadow:0 4px 24px rgba(0,0,0,.12)}
-.nox-header-inner{max-width:1400px;margin:0 auto;padding:.85rem 1.5rem .65rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.5rem}
-.nox-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;flex-shrink:0}
-.nox-brand:hover .nox-logo-img{opacity:.92}
-.nox-brand-sub{font-size:11px;color:#9b9b97;letter-spacing:.04em;margin-top:2px;display:block}
-.tabs{display:flex;gap:4px;padding:0 1.5rem .65rem;background:#1a1a18;flex-wrap:wrap;align-items:flex-end;max-width:1400px;margin:0 auto}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0efe9;color:#1a1a18;font-size:14px}
+.tabs{display:flex;gap:4px;padding:1rem 1.5rem 0;background:#1a1a18;flex-wrap:wrap}
 .tab{padding:.6rem 1.2rem;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:500;color:#9b9b97;background:transparent;border:none;transition:all .2s}
 .tab:hover{color:#fff}
 .tab.active{background:#f0efe9;color:#1a1a18}
@@ -106,7 +96,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cf-badge.fitout{background:#FAEEDA;color:#854F0B}
 .cf-badge.preopen{background:#E6F1FB;color:#185FA5}
 .cf-badge.operating{background:#E1F5EE;color:#0F6E56}
-.data-panel{border:1px dashed rgba(15,110,86,.18);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;background:linear-gradient(180deg,#fcfcfa 0%,#f7f7f4 100%)}
+.data-panel{border:1px dashed rgba(0,0,0,0.12);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;background:#fafaf8}
 .data-panel .dhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem}
 .data-panel .dmeta{font-size:12px;color:#6b6b68}
 .data-panel .dmeta strong{color:#1a1a18;font-weight:500}
@@ -114,34 +104,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .data-dropzone:hover,.data-dropzone.drag{border-color:#185FA5;background:#f0f5fb}
 .data-dropzone .dh{font-size:13px;font-weight:500;color:#1a1a18;margin-bottom:4px}
 .data-dropzone .ds{font-size:12px;color:#6b6b68}
-.dk-hero{background:linear-gradient(135deg,#fff 0%,#f7f9f6 50%,#f0f4f2 100%);border:1px solid rgba(15,110,86,.12);border-radius:16px;padding:1.35rem 1.5rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 8px 32px rgba(26,26,24,.06),0 1px 0 rgba(255,255,255,.8) inset;position:relative;overflow:hidden}
-.dk-hero::before{content:'';position:absolute;top:0;right:0;width:min(42%,280px);height:100%;background:linear-gradient(125deg,transparent 0%,rgba(15,110,86,.06) 100%);pointer-events:none;border-radius:0 16px 0 0}
-.dk-hero-inner{display:flex;flex-wrap:wrap;align-items:flex-start;gap:1.25rem 2rem;position:relative;z-index:1}
-.dk-hero-lockup{display:flex;align-items:center;gap:1rem}
-.dk-hero-titles{min-width:0}
-.dk-hero-kicker{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--nox-green);margin-bottom:.35rem}
-.dk-hero-title{font-size:1.5rem;font-weight:600;color:var(--nox-ink);letter-spacing:-.02em;line-height:1.2}
-.dk-hero-desc{font-size:13px;color:var(--nox-muted);margin-top:.5rem;max-width:52ch;line-height:1.5}
-.dk-hero-meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
-.dk-pill{font-size:11px;font-weight:500;padding:.28rem .65rem;border-radius:999px;background:rgba(24,95,165,.1);color:#145a91;border:1px solid rgba(24,95,165,.2)}
-.dk-pill.emerald{background:rgba(15,110,86,.1);color:var(--nox-green-d);border-color:rgba(15,110,86,.22)}
-.panel{border-color:rgba(15,110,86,.08)}
-@media(max-width:900px){.mlayout{flex-direction:column}.ml{width:100%}.two-col{grid-template-columns:1fr}.dk-hero-title{font-size:1.25rem}}
-@media(max-width:640px){.nox-header-inner{padding-left:1rem;padding-right:1rem}.tabs{padding-left:1rem;padding-right:1rem}}
+.app-topbar{background:#1a1a18;border-bottom:3px solid #0F6E56;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.app-topbar-inner{max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;gap:.5rem 1rem;padding:.85rem 1.5rem 0}
+.nox-top-logo{display:flex;align-items:center;flex-shrink:0;text-decoration:none;padding-bottom:.5rem;margin-right:.35rem}
+.nox-top-logo img{height:56px;width:auto;max-width:300px;object-fit:contain;object-position:left center;display:block}
+.nox-top-logo:hover img{opacity:.9}
+.app-topbar .tabs{flex:1;min-width:min(100%,280px);padding-top:.35rem;background:transparent;margin:0}
+@media(max-width:900px){.mlayout{flex-direction:column}.ml{width:100%}.two-col{grid-template-columns:1fr}.app-topbar-inner{padding-left:1rem;padding-right:1rem}}
 </style>
 </head>
 <body>
-<div class="nox-header-bar">
-  <div class="nox-header-inner">
-    <a class="nox-brand" href="#tc-dashboard" onclick="document.querySelector('[data-tab=dashboard]').click();return false" aria-label="NOX Exhibition Center — Home">
-      <img class="nox-logo-img nox-logo-img--bar" src="nox_logo.png" width="200" height="38" alt="NOX">
-      <span class="nox-brand-stack">
-        <span class="nox-brand-sub">Exhibition Center · Kingdom of Saudi Arabia</span>
-      </span>
+<div class="app-topbar">
+  <div class="app-topbar-inner">
+    <a class="nox-top-logo" href="#tc-dashboard" onclick="var t=document.querySelector('[data-tab=dashboard]');if(t)t.click();return false" aria-label="NOX — Home">
+      <img src="nox_logo.png" width="300" height="56" alt="NOX">
     </a>
-  </div>
-</div>
-<div class="tabs" id="tab-bar">
+    <div class="tabs" id="tab-bar">
   <button class="tab active" data-tab="dashboard">Dashboard</button>
   <button class="tab" data-tab="model">P&amp;L Model</button>
   <button class="tab" data-tab="investment">Investment</button>
@@ -152,27 +130,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <label class="tab" style="cursor:pointer;color:#9b9b97;font-size:12px">&#8593; Import<input type="file" accept=".json" onchange="importSettings(event)" style="display:none"></label>
   <button class="tab" onclick="resetAll()" style="color:#E24B4A;font-size:12px">Reset</button>
   <div id="save-ind" style="display:flex;align-items:center;padding:0 1rem;font-size:11px;color:#9b9b97;opacity:0;transition:opacity .3s">&#10003; Saved</div>
+    </div>
+  </div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="tc active" id="tc-dashboard"><div class="shell">
-  <section class="dk-hero" aria-labelledby="nox-hero-title">
-    <div class="dk-hero-inner">
-      <div class="dk-hero-lockup">
-        <img class="nox-logo-img nox-logo-img--hero" src="nox_logo.png" width="320" height="88" alt="">
-        <div class="dk-hero-titles">
-          <p class="dk-hero-kicker">NOX · Internal planning</p>
-          <h1 class="dk-hero-title" id="nox-hero-title">Exhibition center unit economics</h1>
-          <p class="dk-hero-desc">Scenario modelling for venue rental, Creative House, Rahi Catering, and activations — in SAR, with lease coverage, multi-year occupancy, and cash timing in one place.</p>
-          <div class="dk-hero-meta">
-            <span class="dk-pill emerald">NOX KSA</span>
-            <span class="dk-pill">SAR</span>
-            <span class="dk-pill">v9 model</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
   <div class="data-panel">
     <div class="dhead">
       <div>
