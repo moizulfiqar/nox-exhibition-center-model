@@ -3,10 +3,1381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="0;url=nox_exhibition_center_v9_7.html">
-<title>NOX Exhibition Center</title>
+<title>NOX Exhibition Center - Unit Economics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0efe9;color:#1a1a18;font-size:14px}
+.tabs{display:flex;gap:4px;padding:1rem 1.5rem 0;background:#1a1a18;flex-wrap:wrap}
+.tab{padding:.6rem 1.2rem;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:500;color:#9b9b97;background:transparent;border:none;transition:all .2s}
+.tab:hover{color:#fff}
+.tab.active{background:#f0efe9;color:#1a1a18}
+.tc{display:none;padding:1.5rem}
+.tc.active{display:block}
+.shell{max-width:1400px;margin:0 auto}
+.panel{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem}
+.ptitle{font-size:11px;font-weight:500;color:#6b6b68;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.875rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.ml{width:360px;flex-shrink:0}
+.mr{flex:1;min-width:0}
+.mlayout{display:flex;gap:1.5rem;align-items:start}
+.sr{margin-bottom:.65rem}
+.slw{display:flex;align-items:center;gap:8px;margin-top:3px}
+.slw input[type=range]{flex:1;accent-color:#185FA5;cursor:pointer}
+.slw input[type=number]{width:88px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:3px 6px;font-size:12px;color:#1a1a18;text-align:right;background:#fff}
+.slw input[type=number]:focus{outline:none;border-color:#185FA5}
+.sll{display:flex;justify-content:space-between;font-size:12px;color:#6b6b68;margin-bottom:2px}
+.dbox{background:#f5f4f0;border-radius:8px;padding:.45rem .875rem;margin-bottom:.65rem;font-size:12px;color:#6b6b68;display:flex;justify-content:space-between;align-items:center}
+.dbox span:last-child{font-weight:500;color:#1a1a18;text-align:right;font-size:12px}
+.hdiv{height:1px;background:rgba(0,0,0,0.08);margin:.75rem 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1rem}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:1rem}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1rem}
+.mc{background:#f5f4f0;border-radius:8px;padding:.75rem 1rem}
+.mc.gn{background:#0F6E56}.mc.dk{background:#1a1a18}
+.mlb{font-size:11px;color:#6b6b68;margin-bottom:4px}
+.mc.gn .mlb,.mc.dk .mlb{color:rgba(255,255,255,0.65)}
+.mv{font-size:17px;font-weight:500;color:#1a1a18;line-height:1.1}
+.mc.gn .mv,.mc.dk .mv{color:#fff}
+.mv.green{color:#0F6E56}.mv.amber{color:#854F0B}.mv.red{color:#A32D2D}
+.msb{font-size:11px;color:#6b6b68;margin-top:3px}
+.mc.gn .msb,.mc.dk .msb{color:rgba(255,255,255,0.5)}
+.plt{width:100%;font-size:13px;border-collapse:collapse}
+.plt td{padding:4px 0;color:#6b6b68;border-bottom:none}
+.plt td:last-child{text-align:right;font-weight:500;color:#1a1a18}
+.plt tr.sub td{border-top:1px solid rgba(0,0,0,0.08);padding-top:6px;color:#1a1a18;font-weight:500}
+.plt tr.tot td{border-top:2px solid rgba(0,0,0,0.15);padding-top:7px;font-size:14px;color:#1a1a18;font-weight:500}
+.plt tr.sp td{height:8px}
+.plt tr.sect td{padding-top:10px;font-size:10px;font-weight:500;color:#9b9b97;text-transform:uppercase;letter-spacing:.06em}
+.pos{color:#0F6E56!important}.neg{color:#A32D2D!important}
+.sc3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem}
+.sc{background:#f5f4f0;border-radius:8px;padding:.75rem;text-align:center;border:1px solid rgba(0,0,0,0.08)}
+.scl{font-size:11px;color:#6b6b68;margin-bottom:6px}
+.scr{font-size:12px;margin-bottom:3px;display:flex;justify-content:space-between;padding:0 4px}
+.scr span:first-child{color:#6b6b68}
+.scr span:last-child{font-weight:500}
+.bear .scr.eb span:last-child{color:#A32D2D}
+.base .scr.eb span:last-child{color:#185FA5}
+.bull .scr.eb span:last-child{color:#0F6E56}
+.cw{position:relative;width:100%}
+.pbt{height:8px;background:#f5f4f0;border-radius:4px;overflow:hidden}
+.pbf{height:8px;border-radius:4px;background:#185FA5;transition:width .3s}
+.pbl{display:flex;justify-content:space-between;font-size:11px;color:#6b6b68;margin-top:4px}
+.fct{width:100%;border-collapse:collapse;font-size:12px}
+.fct th{background:#f5f4f0;padding:7px 10px;text-align:right;font-weight:500;font-size:11px;color:#6b6b68;border-bottom:1px solid rgba(0,0,0,0.1)}
+.fct th:first-child{text-align:left}
+.fct td{padding:6px 10px;text-align:right;border-bottom:1px solid rgba(0,0,0,0.05);color:#1a1a18}
+.fct td:first-child{text-align:left;color:#6b6b68;font-size:11px}
+.fct tr.fsub td{background:#f9f9f7;font-weight:500}
+.fct tr.fgp td{color:#0F6E56;font-weight:500;background:#f0f9f5}
+.fct tr.febit td{color:#185FA5;font-weight:500;background:#f0f5fb}
+.fct tr.fsect td{background:#f5f4f0;font-size:10px;color:#9b9b97;text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.occ-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:1rem}
+.occ-box{background:#f5f4f0;border-radius:8px;padding:.6rem .75rem;text-align:center}
+.occ-box label{font-size:11px;color:#6b6b68;display:block;margin-bottom:3px}
+.occ-box input[type=range]{width:100%;accent-color:#185FA5}
+.occ-box input[type=number]{width:60px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:2px 4px;font-size:12px;text-align:center;margin-top:3px;background:#fff}
+.ov{font-size:14px;font-weight:500;color:#1a1a18;margin-top:2px}
+.ldot{width:10px;height:10px;border-radius:2px;display:inline-block;flex-shrink:0}
+.inv-total{background:#1a1a18;color:#fff;border-radius:8px;padding:1rem;margin-bottom:1rem}
+.inv-total .il{font-size:12px;color:#9b9b97;margin-bottom:4px}
+.inv-total .iv{font-size:26px;font-weight:500}
+.dk-kpi{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:1rem;text-align:center}
+.dk-kpi .kl{font-size:11px;color:#6b6b68;margin-bottom:6px}
+.dk-kpi .kv{font-size:22px;font-weight:500;color:#1a1a18;line-height:1.1}
+.dk-kpi .ks{font-size:11px;color:#6b6b68;margin-top:4px}
+.dk-kpi.gn-card{background:#0F6E56;border-color:#0F6E56}
+.dk-kpi.gn-card .kl,.dk-kpi.gn-card .ks{color:rgba(255,255,255,0.7)}
+.dk-kpi.gn-card .kv{color:#fff}
+.dk-kpi.dk-card{background:#1a1a18;border-color:#1a1a18}
+.dk-kpi.dk-card .kl,.dk-kpi.dk-card .ks{color:#9b9b97}
+.dk-kpi.dk-card .kv{color:#fff}
+.cf-badge{display:inline-block;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:500}
+.cf-badge.fitout{background:#FAEEDA;color:#854F0B}
+.cf-badge.preopen{background:#E6F1FB;color:#185FA5}
+.cf-badge.operating{background:#E1F5EE;color:#0F6E56}
+.app-header{background:#1a1a18;color:#f0efe9;border-bottom:1px solid rgba(255,255,255,0.08)}
+.app-header-inner{display:flex;align-items:center;gap:1rem 1.25rem;padding:1rem 1.5rem;flex-wrap:wrap}
+.app-brand{display:flex;align-items:center;gap:1rem;min-width:0;text-decoration:none;color:inherit}
+.app-brand:focus-visible{outline:2px solid #185FA5;outline-offset:3px;border-radius:8px}
+.app-logo{height:44px;width:auto;max-width:min(200px,42vw);display:block;object-fit:contain;object-position:left center}
+.app-title-wrap{display:flex;flex-direction:column;gap:2px;min-width:0}
+.app-title{font-size:1.125rem;font-weight:600;letter-spacing:-0.02em;color:#fff;line-height:1.2}
+.app-sub{font-size:12px;color:#9b9b97;font-weight:400;line-height:1.3}
+@media(max-width:520px){.app-logo{height:36px;max-width:min(180px,50vw)}.app-title{font-size:1rem}}
+@media(max-width:900px){.mlayout{flex-direction:column}.ml{width:100%}.two-col{grid-template-columns:1fr}}
+</style>
+<link rel="icon" href="NOX-Group-logo.png" type="image/png">
 </head>
 <body>
-<p><a href="nox_exhibition_center_v9_7.html">Open NOX Exhibition Center model</a> if you are not redirected automatically.</p>
+<header class="app-header" role="banner">
+  <div class="shell app-header-inner">
+    <a class="app-brand" href="./" aria-label="NOX Exhibition Center — home">
+      <img src="NOX-Group-logo.png" alt="NOX Group" class="app-logo" width="180" height="48" decoding="async">
+      <div class="app-title-wrap">
+        <span class="app-title">Exhibition Center</span>
+        <span class="app-sub">Unit economics model</span>
+      </div>
+    </a>
+  </div>
+</header>
+<div class="tabs" id="tab-bar">
+  <button class="tab active" data-tab="dashboard">Dashboard</button>
+  <button class="tab" data-tab="model">P&amp;L Model</button>
+  <button class="tab" data-tab="investment">Investment</button>
+  <button class="tab" data-tab="forecast">5-Year Forecast</button>
+  <button class="tab" data-tab="realestate">Real Estate</button>
+  <button class="tab" data-tab="cashflow">Cash Flow</button>
+  <button class="tab" onclick="exportSettings()" style="margin-left:auto;color:#9b9b97;font-size:12px">&#8595; Export</button>
+  <label class="tab" style="cursor:pointer;color:#9b9b97;font-size:12px">&#8593; Import<input type="file" accept=".json" onchange="importSettings(event)" style="display:none"></label>
+  <button class="tab" onclick="resetAll()" style="color:#E24B4A;font-size:12px">Reset</button>
+  <div id="save-ind" style="display:flex;align-items:center;padding:0 1rem;font-size:11px;color:#9b9b97;opacity:0;transition:opacity .3s">&#10003; Saved</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="tc active" id="tc-dashboard"><div class="shell">
+  <div class="g4" id="dk-r1" style="margin-bottom:1rem"></div>
+  <div class="g5" id="dk-r2" style="margin-bottom:1rem"></div>
+  <div class="two-col" style="margin-bottom:1rem">
+    <div class="panel">
+      <div class="ptitle">Lease coverage ratio</div>
+      <div style="display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap">
+        <div style="text-align:center">
+          <canvas id="lcrGauge" width="180" height="100"></canvas>
+          <div style="font-size:11px;color:#6b6b68;margin-top:4px">(EBITDA + rent) / Annual Rent</div>
+          <div style="font-size:28px;font-weight:500;margin-top:2px" id="lcr-big">-</div>
+          <div style="font-size:12px;margin-top:2px" id="lcr-status">-</div>
+        </div>
+        <div style="flex:1;min-width:180px">
+          <div style="font-size:12px;color:#6b6b68;margin-bottom:.5rem">5-year trend</div>
+          <div class="cw" style="height:120px"><canvas id="lcrTrend" role="img" aria-label="LCR trend">LCR.</canvas></div>
+          <div style="display:flex;gap:10px;margin-top:.5rem;font-size:11px;color:#6b6b68;flex-wrap:wrap">
+            <span><span class="ldot" style="background:#0F6E56;margin-right:3px"></span>Above 2x</span>
+            <span><span class="ldot" style="background:#854F0B;margin-right:3px"></span>1.5-2x</span>
+            <span><span class="ldot" style="background:#A32D2D;margin-right:3px"></span>Below 1.5x</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Revenue composition</div>
+      <div id="dk-contrib-bar"></div>
+      <div id="dk-contrib-leg" style="display:flex;flex-direction:column;gap:6px;margin-top:.75rem"></div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="panel">
+      <div class="ptitle">P&amp;L waterfall</div>
+      <div class="cw" style="height:280px"><canvas id="waterfallChart" role="img" aria-label="Waterfall">Waterfall.</canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Contribution margin per stream (SAR M)</div>
+      <div style="display:flex;gap:12px;margin-bottom:8px;font-size:12px;color:#6b6b68">
+        <span><span class="ldot" style="background:rgba(24,95,165,0.3);border:1.5px solid #185FA5;margin-right:3px"></span>Revenue</span>
+        <span><span class="ldot" style="background:#185FA5;margin-right:3px"></span>Stream GP</span>
+      </div>
+      <div class="cw" style="height:260px"><canvas id="contribChart" role="img" aria-label="Contribution">Contribution.</canvas></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- P&L MODEL -->
+<div class="tc" id="tc-model"><div class="shell">
+<div class="mlayout">
+<div class="ml">
+  <div class="panel">
+    <div class="ptitle">Venue Pricing</div>
+    <div id="sl-sqm"></div><div id="sl-price"></div><div id="sl-hall"></div>
+    <div class="dbox"><span>Effective day rate</span><span id="d-rate">-</span></div>
+    <div class="hdiv"></div>
+    <div class="ptitle">Operating Assumptions</div>
+    <div id="sl-days"></div><div id="sl-util"></div>
+    <div class="dbox"><span>Paid event days / year</span><span id="d-paid">-</span></div>
+  </div>
+  <div class="panel">
+    <div class="ptitle">Creative House</div>
+    <div id="sl-ch"></div><div id="sl-cht"></div><div id="sl-chm"></div>
+    <div class="hdiv"></div>
+    <div class="ptitle">Rahi Catering</div>
+    <div id="sl-rc"></div><div id="sl-rct"></div><div id="sl-rcm"></div>
+    <div class="hdiv"></div>
+    <div class="ptitle">Activations</div>
+    <div id="sl-ac"></div><div id="sl-act"></div><div id="sl-acm"></div>
+  </div>
+  <div class="panel">
+    <div class="ptitle">Venue Expenses (in COGS)</div>
+    <div id="sl-rent"></div><div id="sl-elec"></div><div id="sl-maint"></div><div id="sl-clean"></div>
+    <div class="hdiv"></div>
+    <div class="ptitle">Manpower (in COGS)</div>
+    <div id="sl-mgr"></div><div id="sl-lab"></div>
+    <div class="hdiv"></div>
+    <div class="ptitle">Depreciation</div>
+    <div id="sl-capex"></div><div id="sl-life"></div>
+    <div class="dbox"><span>Annual depreciation</span><span id="d-dep">-</span></div>
+  </div>
+</div>
+<div class="mr">
+  <div class="panel">
+    <div class="ptitle">Annual P&amp;L Summary (SAR)</div>
+    <div class="g4" style="margin-bottom:10px">
+      <div class="mc"><div class="mlb">Total revenue</div><div class="mv" id="m-rev">-</div><div class="msb" id="m-rev-sub"></div></div>
+      <div class="mc gn"><div class="mlb">Gross Profit (EBITDA)</div><div class="mv" id="m-gp">-</div><div class="msb" id="m-gp-mg"></div></div>
+      <div class="mc dk"><div class="mlb">EBIT</div><div class="mv" id="m-ebit">-</div><div class="msb" id="m-ebit-mg"></div></div>
+      <div class="mc"><div class="mlb">Lease coverage</div><div class="mv" id="m-lcr">-</div><div class="msb">(EBITDA + rent) / rent</div></div>
+    </div>
+    <div class="g4" style="margin-bottom:1rem">
+      <div class="mc"><div class="mlb">Cash payback</div><div class="mv" id="m-payback">-</div><div class="msb">capex / EBITDA</div></div>
+      <div class="mc"><div class="mlb">Breakeven event days</div><div class="mv" id="m-beocc">-</div><div class="msb">days to cover fixed costs</div></div>
+      <div class="mc"><div class="mlb">Avg revenue / event</div><div class="mv" id="m-rpe">-</div><div class="msb">all streams</div></div>
+      <div class="mc"><div class="mlb">Cost per event day</div><div class="mv" id="m-cpd">-</div><div class="msb">COGS / paid days</div></div>
+    </div>
+    <table class="plt"><tbody id="pl-body"></tbody></table>
+    <div style="margin-top:1rem">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b6b68;margin-bottom:4px"><span>Capex recovery (EBITDA basis)</span><span id="pb-pct">-</span></div>
+      <div class="pbt"><div class="pbf" id="pb-fill" style="width:0%"></div></div>
+      <div class="pbl"><span>SAR 0</span><span id="pb-cap">-</span></div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="ptitle">Bear / Base / Bull Scenarios</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:.5rem">
+      <div>
+        <div style="font-size:11px;color:#6b6b68;margin-bottom:3px;text-align:center">Bear utilisation %</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input type="range" min="0" max="100" value="25" step="1" id="sc-bear-sl" style="flex:1;accent-color:#A32D2D" oninput="document.getElementById('sc-bear-ni').value=this.value;SL['sc_bear']=parseInt(this.value);onUpdate()">
+          <input type="number" min="0" max="100" value="25" id="sc-bear-ni" style="width:55px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:3px 6px;font-size:12px;text-align:right;background:#fff" onchange="var v=Math.min(100,Math.max(0,parseInt(this.value)||0));this.value=v;document.getElementById('sc-bear-sl').value=v;SL['sc_bear']=v;onUpdate()">
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#6b6b68;margin-bottom:3px;text-align:center">Base utilisation %</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input type="range" min="0" max="100" value="33" step="1" id="sc-base-sl" style="flex:1;accent-color:#185FA5" oninput="document.getElementById('sc-base-ni').value=this.value;SL['sc_base']=parseInt(this.value);onUpdate()">
+          <input type="number" min="0" max="100" value="33" id="sc-base-ni" style="width:55px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:3px 6px;font-size:12px;text-align:right;background:#fff" onchange="var v=Math.min(100,Math.max(0,parseInt(this.value)||0));this.value=v;document.getElementById('sc-base-sl').value=v;SL['sc_base']=v;onUpdate()">
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#6b6b68;margin-bottom:3px;text-align:center">Bull utilisation %</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <input type="range" min="0" max="100" value="85" step="1" id="sc-bull-sl" style="flex:1;accent-color:#0F6E56" oninput="document.getElementById('sc-bull-ni').value=this.value;SL['sc_bull']=parseInt(this.value);onUpdate()">
+          <input type="number" min="0" max="100" value="85" id="sc-bull-ni" style="width:55px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:3px 6px;font-size:12px;text-align:right;background:#fff" onchange="var v=Math.min(100,Math.max(0,parseInt(this.value)||0));this.value=v;document.getElementById('sc-bull-sl').value=v;SL['sc_bull']=v;onUpdate()">
+        </div>
+      </div>
+    </div>
+    <div class="sc3">
+      <div class="sc bear"><div class="scl" id="sc-bear-lbl">Bear</div><div class="scr"><span>Revenue</span><span id="s-bear-r">-</span></div><div class="scr eb"><span>EBITDA</span><span id="s-bear-e">-</span></div><div class="scr"><span>EBIT</span><span id="s-bear-i">-</span></div><div class="scr"><span>LCR</span><span id="s-bear-lcr">-</span></div></div>
+      <div class="sc base"><div class="scl" id="sc-base-lbl">Base</div><div class="scr"><span>Revenue</span><span id="s-base-r">-</span></div><div class="scr eb"><span>EBITDA</span><span id="s-base-e">-</span></div><div class="scr"><span>EBIT</span><span id="s-base-i">-</span></div><div class="scr"><span>LCR</span><span id="s-base-lcr">-</span></div></div>
+      <div class="sc bull"><div class="scl" id="sc-bull-lbl">Bull</div><div class="scr"><span>Revenue</span><span id="s-bull-r">-</span></div><div class="scr eb"><span>EBITDA</span><span id="s-bull-e">-</span></div><div class="scr"><span>EBIT</span><span id="s-bull-i">-</span></div><div class="scr"><span>LCR</span><span id="s-bull-lcr">-</span></div></div>
+    </div>
+    <div class="cw" style="height:200px"><canvas id="scChart" role="img" aria-label="Scenarios">Scenarios.</canvas></div>
+  </div>
+</div>
+</div>
+</div></div>
+
+<!-- INVESTMENT -->
+<div class="tc" id="tc-investment"><div class="shell">
+  <div class="two-col">
+    <div>
+      <div class="panel">
+        <div class="ptitle">Build-out &amp; Construction</div>
+        <div id="sl-inv-buildout"></div><div id="sl-inv-ffe"></div><div id="sl-inv-av"></div><div id="sl-inv-kitchen"></div><div id="sl-inv-mep"></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Pre-Opening &amp; Soft Costs</div>
+        <div id="sl-inv-licenses"></div><div id="sl-inv-preopening"></div><div id="sl-inv-marketing"></div><div id="sl-inv-wc"></div><div id="sl-inv-contingency"></div>
+      </div>
+      <div class="inv-total"><div class="il">Total investment</div><div class="iv" id="inv-total">-</div></div>
+      <div class="panel">
+        <div class="ptitle">Financing</div>
+        <div id="sl-inv-discount"></div><div id="sl-inv-debtpct"></div><div id="sl-inv-debtrate"></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="ptitle">Investment breakdown</div>
+        <div class="cw" style="height:260px"><canvas id="invPie" role="img" aria-label="Investment breakdown">Investment.</canvas></div>
+        <div id="inv-legend" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:.75rem"></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Return metrics</div>
+        <div class="g3">
+          <div class="mc"><div class="mlb">ROI (EBIT / inv)</div><div class="mv" id="inv-roi">-</div><div class="msb">year 1</div></div>
+          <div class="mc"><div class="mlb">Cash-on-cash</div><div class="mv" id="inv-coc">-</div><div class="msb">EBITDA / inv</div></div>
+          <div class="mc"><div class="mlb">Payback</div><div class="mv" id="inv-payback">-</div><div class="msb">inv / EBITDA</div></div>
+          <div class="mc"><div class="mlb">NPV (5-yr)</div><div class="mv" id="inv-npv">-</div><div class="msb" id="inv-npv-sub"></div></div>
+          <div class="mc"><div class="mlb">IRR (5-yr)</div><div class="mv" id="inv-irr">-</div><div class="msb">approx.</div></div>
+          <div class="mc"><div class="mlb">Equity required</div><div class="mv" id="inv-equity">-</div><div class="msb" id="inv-equity-sub"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- FORECAST -->
+<div class="tc" id="tc-forecast"><div class="shell">
+  <div class="panel"><div class="ptitle">Occupancy rate per year</div><div class="occ-grid" id="occ-inputs"></div></div>
+  <div class="panel">
+    <div class="ptitle">Attach rates per year (%)</div>
+    <div style="font-size:12px;color:#6b6b68;margin-bottom:.75rem">Set attach rate for each revenue stream per year — ramp up as venue establishes market presence</div>
+    <div style="display:grid;grid-template-columns:120px repeat(5,1fr);gap:8px;margin-bottom:.5rem">
+      <div style="font-size:11px;color:#6b6b68;padding-top:8px">Stream</div>
+      <div style="font-size:11px;color:#6b6b68;text-align:center">Year 1</div>
+      <div style="font-size:11px;color:#6b6b68;text-align:center">Year 2</div>
+      <div style="font-size:11px;color:#6b6b68;text-align:center">Year 3</div>
+      <div style="font-size:11px;color:#6b6b68;text-align:center">Year 4</div>
+      <div style="font-size:11px;color:#6b6b68;text-align:center">Year 5</div>
+    </div>
+    <div id="attach-yr-inputs"></div>
+  </div>
+  <div class="panel"><div class="ptitle">5-Year P&amp;L Forecast</div><div style="overflow-x:auto"><table class="fct"><thead id="fc-head"></thead><tbody id="fc-body"></tbody></table></div></div>
+  <div class="two-col">
+    <div class="panel">
+      <div class="ptitle">Revenue / EBITDA / EBIT trend</div>
+      <div class="cw" style="height:220px"><canvas id="fcChart" role="img" aria-label="Forecast">Forecast.</canvas></div>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Cumulative cash flow</div>
+      <div class="cw" style="height:220px"><canvas id="cumulChart" role="img" aria-label="Cumulative CF">Cumul.</canvas></div>
+    </div>
+  </div>
+</div></div>
+
+<!-- REAL ESTATE -->
+<div class="tc" id="tc-realestate"><div class="shell">
+  <div class="two-col">
+    <div>
+      <div class="panel">
+        <div class="ptitle">Property inputs</div>
+        <div class="dbox"><span>Annual rent (auto from P&amp;L model)</span><span id="re-auto-rent">-</span></div>
+        <div id="sl-re-totalarea"></div>
+        <div id="sl-re-netarea"></div>
+        <div class="dbox"><span>Space efficiency ratio</span><span id="re-efficiency">-</span></div>
+        <div class="dbox"><span>Non-revenue area (parking / services)</span><span id="re-nonrev-area">-</span></div>
+        <div id="sl-re-landval"></div>
+        <div class="dbox"><span>SQM market price (land val / total area)</span><span id="re-sqm-price">-</span></div>
+        <div class="dbox"><span>Rental yield (rent / land market value)</span><span id="re-yield-calc">-</span></div>
+        <div class="hdiv"></div>
+        <div class="ptitle">Lease assumptions</div>
+        <div id="sl-re-term"></div>
+        <div class="dbox"><span>Total rent obligation (full term)</span><span id="re-total-rent">-</span></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Rent coverage &amp; space efficiency</div>
+        <div class="g2" style="margin-bottom:.75rem">
+          <div class="mc"><div class="mlb">Space efficiency ratio</div><div class="mv amber" id="re-eff-big">-</div><div class="msb" id="re-eff-sub">net / total leased</div></div>
+          <div class="mc"><div class="mlb">Dead space cost / yr</div><div class="mv red" id="re-dead-cost">-</div><div class="msb">rent on non-revenue sqm</div></div>
+          <div class="mc"><div class="mlb">Days to cover rent (venue only)</div><div class="mv" id="re-dv">-</div><div class="msb">venue stream only</div></div>
+          <div class="mc"><div class="mlb">Days to cover rent (all streams)</div><div class="mv" id="re-da">-</div><div class="msb">blended rev/day</div></div>
+          <div class="mc"><div class="mlb">Rent as % of revenue</div><div class="mv" id="re-rrp">-</div><div class="msb">base year</div></div>
+          <div class="mc"><div class="mlb">Rent as % of EBITDA</div><div class="mv" id="re-rgp">-</div><div class="msb">base year</div></div>
+        </div>
+        <div class="ptitle" style="margin-bottom:.5rem">Rent % of revenue — 5yr trend</div>
+        <div class="cw" style="height:160px"><canvas id="re-trend" role="img" aria-label="Rent trend">Rent trend.</canvas></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Annual rent per year (SAR M)</div>
+        <div style="font-size:12px;color:#6b6b68;margin-bottom:.75rem">Set actual rent for each year — Y1 rent-free = SAR 0. Used in forecast, P&L base year, and cash flow.</div>
+        <div id="rent-per-year-inputs"></div>
+        <div class="chart-wrap cw" style="height:180px;margin-top:.75rem"><canvas id="re-esc" role="img" aria-label="Rent per year">Rent per year.</canvas></div>
+      </div>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="ptitle">SQM pricing — your venue vs Riyadh market</div>
+        <div class="g3" style="margin-bottom:.75rem">
+          <div class="mc"><div class="mlb">Your yearly rental / sqm</div><div class="mv green" id="re-your-sqm">-</div><div class="msb">rent / total leased area</div></div>
+          <div class="mc"><div class="mlb">Market low (NOX Camp)</div><div class="mv">SAR 0.67</div><div class="msb">rental/sqm/yr</div></div>
+          <div class="mc"><div class="mlb">Market high (Poeta)</div><div class="mv">SAR 500</div><div class="msb">rental/sqm/yr</div></div>
+        </div>
+        <div class="cw" style="height:220px"><canvas id="re-bench" role="img" aria-label="Benchmark">Benchmark.</canvas></div>
+        <div style="font-size:11px;color:#6b6b68;margin-top:.5rem">Annual rent per sqm by venue. Tooltip shows avg rental-to-price ratio.</div>
+        <div class="ptitle" style="margin-top:1rem;margin-bottom:.5rem">Avg rental-to-price ratio (%) — annual rent / land market value</div>
+        <div class="cw" style="height:180px"><canvas id="re-ratio" role="img" aria-label="Rental to price ratio">Ratio chart.</canvas></div>
+        <div style="font-size:11px;color:#6b6b68;margin-top:.5rem">Annual rent as % of land market price. Higher = better yield for landlord / higher rental burden for tenant.</div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Implied asset value &amp; appreciation</div>
+        <div class="g2" style="margin-bottom:.75rem">
+          <div class="mc"><div class="mlb">Land market value</div><div class="mv" id="re-impl">-</div><div class="msb" id="re-impl-sub"></div></div>
+          <div class="mc"><div class="mlb">Rental yield</div><div class="mv amber" id="re-yield">-</div><div class="msb">rent / market value</div></div>
+          <div class="mc"><div class="mlb">Projected value at lease end</div><div class="mv green" id="re-endv">-</div><div class="msb" id="re-endv-sub"></div></div>
+          <div class="mc"><div class="mlb">Value gain</div><div class="mv green" id="re-gain">-</div><div class="msb">vs today</div></div>
+        </div>
+        <div class="cw" style="height:160px"><canvas id="re-valchart" role="img" aria-label="Value appreciation">Value.</canvas></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Buy vs lease — strategic view</div>
+        <div class="g2" style="margin-bottom:.75rem">
+          <div class="mc"><div class="mlb">Total rent over term</div><div class="mv red" id="re-rent25">-</div><div class="msb">no escalation</div></div>
+          <div class="mc"><div class="mlb">Purchase price today</div><div class="mv" id="re-purchase">-</div><div class="msb">land market value</div></div>
+          <div class="mc"><div class="mlb">Projected equity at end</div><div class="mv green" id="re-eq25">-</div><div class="msb">ownership scenario</div></div>
+          <div class="mc"><div class="mlb">Net ownership advantage</div><div class="mv" id="re-adv">-</div><div class="msb">equity - purchase</div></div>
+        </div>
+        <div style="font-size:11px;color:#6b6b68;padding:.75rem;background:#f5f4f0;border-radius:8px" id="re-note">-</div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- CASH FLOW -->
+<div class="tc" id="tc-cashflow"><div class="shell">
+  <div class="two-col" style="margin-bottom:1rem">
+    <div class="panel">
+      <div class="ptitle">Cash flow assumptions</div>
+      <div id="sl-cf-rentfree"></div><div id="sl-cf-rentadv"></div><div id="sl-cf-fitout"></div><div id="sl-cf-leadtime"></div>
+      <div class="hdiv"></div>
+      <div class="ptitle">Client collections</div>
+      <div id="sl-cf-dep1pct"></div><div id="sl-cf-dep2days"></div>
+      <div class="hdiv"></div>
+      <div class="ptitle">Supplier payments</div>
+      <div id="sl-cf-cogspre"></div><div id="sl-cf-cogspost"></div>
+      <div class="hdiv"></div>
+      <div class="ptitle">Opening position</div>
+      <div id="sl-cf-opencash"></div>
+      <div class="dbox"><span>Month of first paid event</span><span id="cf-first-event">-</span></div>
+    </div>
+    <div>
+      <div class="g2" style="margin-bottom:1rem">
+        <div class="mc"><div class="mlb">Peak funding gap</div><div class="mv red" id="cf-gap">-</div><div class="msb">max cash needed</div></div>
+        <div class="mc"><div class="mlb">Cash breakeven month</div><div class="mv" id="cf-bem">-</div><div class="msb">cumul CF positive</div></div>
+        <div class="mc"><div class="mlb">End of Y1 cash balance</div><div class="mv" id="cf-y1">-</div><div class="msb">after all outflows</div></div>
+        <div class="mc"><div class="mlb">End of Y2 cash balance</div><div class="mv" id="cf-y2">-</div><div class="msb">cumulative</div></div>
+      </div>
+      <div class="panel">
+        <div class="ptitle">Cumulative cash flow — Month 1 to 24</div>
+        <div class="cw" style="height:210px"><canvas id="cf-cumul" role="img" aria-label="Cumul CF">Cumul CF.</canvas></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="ptitle">Monthly cash flow — Year 1 &amp; Year 2 (SAR)</div>
+    <div style="overflow-x:auto"><table class="fct"><thead id="cf-mhead"></thead><tbody id="cf-mbody"></tbody></table></div>
+  </div>
+  <div class="two-col" style="margin-top:1rem">
+    <div class="panel">
+      <div class="ptitle">Annual cash flow — Y1 to Y5</div>
+      <div style="overflow-x:auto"><table class="fct"><thead id="cf-ahead"></thead><tbody id="cf-abody"></tbody></table></div>
+    </div>
+    <div class="panel">
+      <div class="ptitle">Cash inflows vs outflows — annual</div>
+      <div class="cw" style="height:220px"><canvas id="cf-annual" role="img" aria-label="Annual CF">Annual CF.</canvas></div>
+    </div>
+  </div>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// ===================== UTILS =====================
+function fmt(n){var v=isNaN(n)||!isFinite(n)?0:n;if(Math.abs(v)>=1e6){var m=v/1e6;return(m===Math.round(m)?m.toFixed(0):m.toFixed(1))+'M';}if(Math.abs(v)>=1e3)return(v/1e3).toFixed(0)+'K';return Math.round(v).toLocaleString()}
+function fsar(n){return'SAR '+fmt(n)}
+function pct(n){return Math.round(isNaN(n)||!isFinite(n)?0:n)+'%'}
+function pctf(n){return(isNaN(n)||!isFinite(n)?0:n).toFixed(1)+'%'}
+function safe(v){return isNaN(v)||!isFinite(v)?0:v}
+function sfmt(v){return(v>=0?'':'-')+'SAR '+fmt(Math.abs(v))}
+function el(id){return document.getElementById(id)}
+function sv(id,v){var e=el(id);if(e)e.textContent=v}
+function sc(id,cls){var e=el(id);if(e)e.className=cls}
+
+// ===================== TABS =====================
+var activeTab='dashboard';
+var chartsRendered={};
+document.getElementById('tab-bar').addEventListener('click',function(e){
+  var btn=e.target.closest('.tab');
+  if(!btn)return;
+  var tab=btn.getAttribute('data-tab');
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.querySelectorAll('.tc').forEach(function(t){t.classList.remove('active')});
+  btn.classList.add('active');
+  el('tc-'+tab).classList.add('active');
+  activeTab=tab;
+  setTimeout(function(){renderTab(tab)},30);
+});
+
+// ===================== SLIDERS =====================
+var SL={};
+function mkSl(cid,key,label,mn,mx,step,def){
+  var c=el(cid);if(!c)return;
+  var w=document.createElement('div');w.className='sr';
+  var ll=document.createElement('div');ll.className='sll';
+  ll.innerHTML='<span>'+label+'</span>';
+  w.appendChild(ll);
+  var sw=document.createElement('div');sw.className='slw';
+  var sl=document.createElement('input');sl.type='range';sl.min=mn;sl.max=mx;sl.step=step;sl.value=def;
+  var ni=document.createElement('input');ni.type='number';ni.min=mn;ni.max=mx;ni.step=step;ni.value=def;
+  function sync(v){SL[key]=parseFloat(v);sl.value=v;ni.value=v;
+    // Keep base scenario in sync with main util
+    if(key==='util'){
+      var bv=Math.round(parseFloat(v));
+      // Sync base scenario
+      SL['sc_base']=bv;
+      var bsl=document.getElementById('sc-base-sl');var bni=document.getElementById('sc-base-ni');
+      if(bsl)bsl.value=bv;if(bni)bni.value=bv;
+      // Sync Year 1 display
+      occArr[0]=bv;
+      var ov0=el('ov-0');if(ov0)ov0.textContent=bv+'%';
+    }
+    onUpdate()}
+  sl.oninput=function(){sync(this.value)};
+  ni.onchange=function(){var v=Math.min(parseFloat(mx),Math.max(parseFloat(mn),parseFloat(this.value)||0));sync(v)};
+  sw.appendChild(sl);sw.appendChild(ni);w.appendChild(sw);
+  c.appendChild(w);SL[key]=parseFloat(def);
+}
+function g(k){return SL[k]||0}
+
+// ===================== OCCUPANCY =====================
+var occArr = [55,62,70,75,80];
+function buildOcc(){
+  var w=el('occ-inputs');if(!w)return;w.innerHTML='';
+  occArr.forEach(function(ov,idx){
+    var box=document.createElement('div');box.className='occ-box';
+    var lbl=document.createElement('label');lbl.textContent='Year '+(idx+1);
+    if(idx===0){
+      // Year 1 locked to P&L util rate
+      var vd=document.createElement('div');vd.className='ov';vd.id='ov-0';vd.textContent=(g('util')||33)+'%';
+      var note=document.createElement('div');note.style.cssText='font-size:10px;color:#9b9b97;margin-top:2px';note.textContent='from P&L model';
+      box.appendChild(lbl);box.appendChild(vd);box.appendChild(note);
+    } else {
+      var sl=document.createElement('input');sl.type='range';sl.min=0;sl.max=100;sl.step=1;sl.value=ov;
+      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.value=ov;
+      var vd=document.createElement('div');vd.className='ov';vd.id='ov-'+idx;vd.textContent=ov+'%';
+      function sync(i){return function(v){occArr[i]=parseInt(v)||0;sl.value=v;ni.value=v;el('ov-'+i).textContent=occArr[i]+'%';onUpdate()}}
+      sl.oninput=function(){sync(idx)(this.value)};
+      ni.onchange=function(){sync(idx)(Math.min(100,Math.max(0,parseInt(this.value)||0)))};
+      box.appendChild(lbl);box.appendChild(sl);box.appendChild(ni);
+    }
+    w.appendChild(box);
+  });
+}
+
+// ===================== CALC ENGINE =====================
+function calcYr(uOvr,rentOvr,attachOvr){
+  var u=uOvr!==undefined?uOvr:g('util')/100;
+  var days=Math.round(g('days')*u);
+  var bsqm=(attachOvr&&attachOvr.netArea!==undefined?attachOvr.netArea:g('sqm'))*g('hall')/100;
+  var drate=bsqm*g('price');
+  var vrev=days*drate;
+  var chRate=attachOvr?attachOvr.ch/100:g('ch')/100;
+  var rcRate=attachOvr?attachOvr.rc/100:g('rc')/100;
+  var acRate=attachOvr?attachOvr.ac/100:g('ac')/100;
+  var chrev=days*chRate*g('cht');
+  var chcost=chrev*(1-g('chm')/100);
+  var chgp=chrev-chcost;
+  var rcrev=days*rcRate*g('rct');
+  var rccost=rcrev*(1-g('rcm')/100);
+  var rcgp=rcrev-rccost;
+  var acrev=days*acRate*g('act');
+  var accost=acrev*(1-g('acm')/100);
+  var acgp=acrev-accost;
+  var trev=vrev+chrev+rcrev+acrev;
+  var rent=rentOvr!==undefined?rentOvr*1e6:g('rent')*1e6;
+  var elec=g('elec')*1000;
+  var maint=g('maint')*1000;
+  var clean=g('clean')*1000;
+  var mgr=g('mgr')*1000;
+  var lab=g('lab')*1000;
+  var venueexp=rent+elec+maint+clean;
+  var manpower=mgr+lab;
+  var subCOGS=chcost+rccost+accost;
+  // Option C: COGS = subsidiary costs + salaries + rent + utilities
+  var tcogs=subCOGS+manpower+venueexp;
+  // Per-stream GP: venue deducts rent+utilities, subsidiaries deduct direct costs, salaries shared
+  var vgp=vrev-venueexp;
+  // ebitda = gross profit (all opex in COGS)
+  var gp=trev-tcogs;
+  var ebitda=gp;
+  var dep=g('capex')*1e6/Math.max(1,g('life'));
+  var ebit=gp-dep;
+  var topex=venueexp+manpower;
+  var lcr=rent>0?(ebitda+rent)/rent:0; // EBITDA + rent back / rent = true coverage
+  var rpe=days>0?trev/days:0;
+  var cpd=days>0?tcogs/days:0;
+  return{days:days,bsqm:bsqm,drate:drate,vrev:vrev,vgp:vgp,chrev:chrev,chcost:chcost,chgp:chgp,rcrev:rcrev,rccost:rccost,rcgp:rcgp,acrev:acrev,accost:accost,acgp:acgp,trev:trev,subCOGS:subCOGS,tcogs:tcogs,gp:gp,ebitda:ebitda,rent:rent,elec:elec,maint:maint,clean:clean,mgr:mgr,lab:lab,venueexp:venueexp,manpower:manpower,topex:topex,dep:dep,ebit:ebit,lcr:lcr,rpe:rpe,cpd:cpd}
+}
+function calcBE(){
+  var drate=g('sqm')*g('hall')/100*g('price');
+  var chnet=(g('ch')/100)*g('cht')*(g('chm')/100);
+  var rcnet=(g('rc')/100)*g('rct')*(g('rcm')/100);
+  var acnet=(g('ac')/100)*g('act')*(g('acm')/100);
+  var gpd=drate+chnet+rcnet+acnet;
+  var fixedCOGS=g('rent')*1e6+g('elec')*1000+g('maint')*1000+g('clean')*1000+g('mgr')*1000+g('lab')*1000;
+  if(gpd<=0)return{days:9999,occ:999};
+  var bd=Math.ceil(fixedCOGS/gpd);
+  return{days:bd,occ:g('days')>0?bd/g('days')*100:999}
+}
+function calcIRR(cfs){
+  var lo=-0.99,hi=10,mid,npv,i;
+  for(var iter=0;iter<100;iter++){mid=(lo+hi)/2;npv=0;for(i=0;i<cfs.length;i++){npv+=cfs[i]/Math.pow(1+mid,i);}if(Math.abs(npv)<1)break;if(npv>0)lo=mid;else hi=mid;}
+  return mid;
+}
+function calcNPV(cfs,rate){var n=0;for(var i=0;i<cfs.length;i++){n+=cfs[i]/Math.pow(1+rate/100,i);}return n;}
+function calcTotalInv(){
+  var hard=(g('inv_buildout')+g('inv_ffe')+g('inv_av')+g('inv_kitchen')+g('inv_mep'))*1e6;
+  return hard*(1+g('inv_contingency')/100)+(g('inv_licenses')+g('inv_preopening')+g('inv_marketing')+g('inv_wc'))*1e6;
+}
+
+// ===================== CHARTS =====================
+var CHARTS={};
+function upsertChart(id,type,data,opts){
+  var canvas=el(id);if(!canvas)return;
+  if(CHARTS[id]){
+    CHARTS[id].data=data;
+    if(opts)CHARTS[id].options=opts;
+    CHARTS[id].update('none');
+    return CHARTS[id];
+  }
+  var ch=new Chart(canvas,{type:type,data:data,options:opts||{responsive:true,maintainAspectRatio:false}});
+  CHARTS[id]=ch;return ch;
+}
+
+// ===================== GAUGE =====================
+function drawGauge(val){
+  var c=el('lcrGauge');if(!c)return;
+  var ctx=c.getContext('2d');ctx.clearRect(0,0,180,100);
+  var cx=90,cy=90,r=68;
+  ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,2*Math.PI);ctx.lineWidth=14;ctx.strokeStyle='#f0efe9';ctx.stroke();
+  var capV=Math.min(val,5);var ang=Math.PI+(capV/5)*Math.PI;
+  var col=val>=2?'#0F6E56':val>=1.5?'#854F0B':'#A32D2D';
+  ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,ang);ctx.lineWidth=14;ctx.strokeStyle=col;ctx.lineCap='round';ctx.stroke();
+  [[1.5,'#854F0B'],[2.0,'#0F6E56']].forEach(function(t){
+    var a=Math.PI+(t[0]/5)*Math.PI;
+    ctx.beginPath();ctx.moveTo(cx+(r-8)*Math.cos(a),cy+(r-8)*Math.sin(a));ctx.lineTo(cx+(r+4)*Math.cos(a),cy+(r+4)*Math.sin(a));
+    ctx.strokeStyle=t[1];ctx.lineWidth=2;ctx.lineCap='square';ctx.stroke();
+  });
+}
+
+// ===================== VENUE DATA =====================
+var VENUES=[
+  {n:'NOX Camp Riyadh',size:150000,sqmPrice:54,rent:100000,ratio:0.0124},
+  {n:'NOX Camp Jeddah',size:150000,sqmPrice:100,rent:250000,ratio:0.0114},
+  {n:'NOX Camp Dammam',size:50000,sqmPrice:200,rent:600000,ratio:0.0485},
+  {n:'Alrayyan (Hall)',size:5000,sqmPrice:14000,rent:3250000,ratio:0.0565},
+  {n:'Alammariya',size:45000,sqmPrice:1800,rent:1000000,ratio:0.0212},
+  {n:'Jawharat Alwaseel',size:45000,sqmPrice:5000,rent:7000000,ratio:0.0356},
+  {n:'Derayah Farm',size:25000,sqmPrice:10000,rent:1250000,ratio:0.003},
+  {n:'Vera (Resort)',size:17000,sqmPrice:2600,rent:2500000,ratio:0.0679},
+  {n:'Poeta (Resort)',size:3000,sqmPrice:6000,rent:1500000,ratio:0.1237},
+  {n:'Jawharah Alamariyah',size:42500,sqmPrice:1500,rent:2000000,ratio:0.0447}
+];
+
+// ===================== STATE =====================
+var lastR=null,lastFc=null;
+
+// ===================== MAIN UPDATE =====================
+function onUpdate(){
+  var r=calcYr();
+  var be=calcBE();
+  // Year 1 always mirrors P&L util rate
+  occArr[0]=Math.round(g('util'));
+  var ov0=el('ov-0');if(ov0)ov0.textContent=occArr[0]+'%';
+  // Year 1 rent always mirrors P&L rent slider
+  rentPerYear[0]=g('rent')||6.5;
+  var rpy0=el('rpy-0-disp');if(rpy0)rpy0.textContent='SAR '+(rentPerYear[0]).toFixed(1)+'M';
+  var fc=occArr.map(function(o,i){
+    return calcYr(o/100,rentPerYear[i],{ch:chAttachYr[i],rc:rcAttachYr[i],ac:acAttachYr[i],netArea:netAreaYr[i]});
+  });
+  lastR=r;lastFc=fc;
+
+  // Derived boxes
+  sv('d-rate','SAR '+fmt(r.drate));
+  sv('d-paid',r.days+' days');
+  sv('d-dep',fsar(r.dep));
+
+  // Model metrics
+  sv('m-rev',fsar(r.trev));sv('m-rev-sub',r.days+' paid days');
+  var mgp=el('m-gp');if(mgp){mgp.textContent=fsar(r.gp);mgp.className='mv '+(r.gp>=0?'green':'red')}
+  sv('m-gp-mg',pctf(safe(r.gp/r.trev)*100)+' margin');
+  var mei=el('m-ebit');if(mei){mei.textContent=fsar(r.ebit);mei.className='mv '+(r.ebit>=0?'green':'red')}
+  sv('m-ebit-mg',pctf(safe(r.ebit/r.trev)*100)+' margin');
+  var lcrCls=r.lcr>=2?'green':r.lcr>=1.5?'amber':'red';
+  var mlcr=el('m-lcr');if(mlcr){mlcr.textContent=r.lcr.toFixed(2)+'x';mlcr.className='mv '+lcrCls}
+  var pb=r.ebitda>0?(g('capex')*1e6/r.ebitda).toFixed(1):null;
+  var mp=el('m-payback');if(mp){mp.textContent=pb?pb+' yrs':'n/a';mp.className='mv '+(pb&&+pb<=7?'green':pb?'amber':'red')}
+  var mbo=el('m-beocc');if(mbo){mbo.textContent=be.days<9999?be.days+' days':'n/a';mbo.className='mv '+(be.days<r.days?'green':'amber')}
+  sv('m-rpe',fsar(r.rpe));sv('m-cpd',fsar(r.cpd));
+
+  // P&L table
+  var rows=[
+    {t:'sect',l:'Revenue'},
+    {l:'Venue rental ('+Math.round(r.bsqm).toLocaleString()+' sqm x SAR '+g('price')+'/sqm/day)',v:r.vrev},
+    {l:'Creative House (production)',v:r.chrev},
+    {l:'Rahi Catering',v:r.rcrev},
+    {l:'Activations',v:r.acrev},
+    {l:'Total Revenue',v:r.trev,c:'sub'},
+    {t:'sp'},{t:'sect',l:'Per-stream GP (before shared costs)'},
+    {l:'Venue GP (revenue - rent - utilities)',v:r.vgp},
+    {l:'Creative House GP ('+pct(g('chm'))+'% margin)',v:r.chgp},
+    {l:'Rahi Catering GP ('+pct(g('rcm'))+'% margin)',v:r.rcgp},
+    {l:'Activations GP ('+pct(g('acm'))+'% margin)',v:r.acgp},
+    {l:'Salaries (shared overhead)',v:-(r.mgr+r.lab)},
+    {t:'sp'},{t:'sect',l:'COGS (all direct costs)'},
+    {l:'Creative House direct cost ('+pct(100-g('chm'))+'%)',v:-r.chcost},
+    {l:'Rahi direct cost ('+pct(100-g('rcm'))+'%)',v:-r.rccost},
+    {l:'Activations direct cost ('+pct(100-g('acm'))+'%)',v:-r.accost},
+    {l:'Managers',v:-r.mgr},{l:'Labour',v:-r.lab},
+    {l:'Annual rent',v:-r.rent},{l:'Electricity',v:-r.elec},{l:'Maintenance',v:-r.maint},{l:'Cleaning',v:-r.clean},
+    {l:'Total COGS',v:-r.tcogs,c:'sub'},
+    {t:'sp'},{l:'Gross Profit (EBITDA)',v:r.gp,c:'tot',h:1},
+    {t:'sp'},{l:'Depreciation ('+g('life')+' yrs)',v:-r.dep},
+    {l:'EBIT',v:r.ebit,c:'tot',h:1}
+  ];
+  el('pl-body').innerHTML=rows.map(function(row){
+    if(row.t=='sp')return'<tr class="sp"><td colspan="2"></td></tr>';
+    if(row.t=='sect')return'<tr class="sect"><td colspan="2">'+row.l+'</td></tr>';
+    var d=row.v<0?'('+fsar(Math.abs(row.v))+')':fsar(row.v);
+    var vc=row.h?(row.v>=0?'pos':'neg'):'';
+    return'<tr class="'+(row.c||'')+'"><td>'+row.l+'</td><td class="'+vc+'">'+d+'</td></tr>';
+  }).join('');
+
+  var pp=Math.min(100,r.ebitda>0?Math.round(r.ebitda/(g('capex')*1e6)*100):0);
+  el('pb-fill').style.width=pp+'%';sv('pb-pct',pp+'%');sv('pb-cap',fsar(g('capex')*1e6));
+
+  // Re-render active tab
+  renderTab(activeTab);
+}
+
+// ===================== TAB RENDERERS =====================
+function renderTab(tab){
+  var r=lastR,fc=lastFc;
+  if(!r||!fc)return;
+  if(tab==='dashboard'){renderDashboard(r,fc);renderScenarios(r);}
+  if(tab==='model'){renderModel(r);renderScenarios(r);}
+  if(tab==='investment')renderInvestment(r,fc);
+  if(tab==='forecast'){renderForecast(r,fc);buildAttachYrInputs();buildRentPerYear();}
+  if(tab==='realestate'){renderRealEstate(r,fc);buildRentPerYear();}
+  if(tab==='cashflow')renderCashFlow(r,fc);
+}
+
+function renderDashboard(r,fc){
+  // Force chart containers to have explicit height so Chart.js can measure them
+  ['lcrTrend','waterfallChart','contribChart'].forEach(function(id){
+    var c=el(id);if(c&&c.parentElement){c.parentElement.style.minHeight=c.parentElement.style.height||'200px';}
+  });
+  var lcrCls=r.lcr>=2?'green':r.lcr>=1.5?'amber':'red';
+  el('dk-r1').innerHTML=[
+    {l:'Total revenue',v:fsar(r.trev),s:r.days+' paid days',c:''},
+    {l:'Gross Profit / EBITDA',v:fsar(r.gp),s:pctf(safe(r.gp/r.trev)*100)+' margin',c:'gn-card'},
+    {l:'EBIT',v:fsar(r.ebit),s:pctf(safe(r.ebit/r.trev)*100)+' margin',c:'dk-card'},
+    {l:'Lease coverage',v:r.lcr.toFixed(2)+'x',s:'EBITDA / rent',c:''}
+  ].map(function(k){return'<div class="dk-kpi '+k.c+'"><div class="kl">'+k.l+'</div><div class="kv">'+k.v+'</div><div class="ks">'+k.s+'</div></div>'}).join('');
+  el('dk-r2').innerHTML=[
+    {l:'Avg revenue / event',v:fsar(r.rpe),s:'all 4 streams'},
+    {l:'Cost per event day',v:fsar(r.cpd),s:'COGS / paid days'},
+    {l:'Breakeven event days',v:calcBE().days<9999?calcBE().days+' days':'n/a',s:'days needed to cover fixed costs'},
+    {l:'Payback period',v:(r.ebitda>0?(g('capex')*1e6/r.ebitda).toFixed(1):'n/a')+(r.ebitda>0?' yrs':''),s:'capex / EBITDA'},
+    {l:'EBITDA / sqm / yr',v:'SAR '+fmt(safe(r.ebitda/g('sqm'))),s:'on '+fmt(g('sqm'))+' sqm'}
+  ].map(function(k){return'<div class="dk-kpi"><div class="kl">'+k.l+'</div><div class="kv">'+k.v+'</div><div class="ks">'+k.s+'</div></div>'}).join('');
+
+  // Gauge
+  drawGauge(r.lcr);
+  el('lcr-big').textContent=r.lcr.toFixed(2)+'x';
+  el('lcr-big').style.color=r.lcr>=2?'#0F6E56':r.lcr>=1.5?'#854F0B':'#A32D2D';
+  sv('lcr-status',r.lcr>=2?'Strong coverage':r.lcr>=1.5?'Adequate — monitor':'Below threshold');
+  el('lcr-status').style.color=r.lcr>=2?'#0F6E56':r.lcr>=1.5?'#854F0B':'#A32D2D';
+
+  // LCR trend
+  upsertChart('lcrTrend','bar',{
+    labels:occArr.map(function(o,i){return'Y'+(i+1)+' ('+o+'%)'}),
+    datasets:[{data:fc.map(function(yr){return+yr.lcr.toFixed(2)}),backgroundColor:fc.map(function(yr){return yr.lcr>=2?'#0F6E56':yr.lcr>=1.5?'#854F0B':'#A32D2D'}),borderRadius:4,barPercentage:0.6}]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:function(v){return v+'x'}}}}});
+
+  // Contrib bar
+  var streams=['Venue','Creative House','Rahi','Activations'];
+  var sRevs=[r.vrev,r.chrev,r.rcrev,r.acrev];
+  var sGPs=[r.vgp,r.chgp,r.rcgp,r.acgp];
+  var sColors=['#185FA5','#0F6E56','#B8860B','#7B3FA0'];
+  var tot=r.trev||1;
+  // Revenue bar
+  var bar='<div style="font-size:10px;color:#6b6b68;margin-bottom:3px">Revenue</div>';
+  bar+='<div style="display:flex;height:24px;border-radius:6px;overflow:hidden;margin-bottom:6px">';
+  sRevs.forEach(function(v,i){var w=Math.max(0,v/tot*100);bar+='<div style="width:'+w+'%;background:'+sColors[i]+';display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:500">'+(w>10?streams[i]:'')+'</div>';});
+  bar+='</div>';
+  // GP bar - use total GP as reference scale (same scale as revenue for comparability)
+  var totalGP=sGPs.reduce(function(a,b){return a+(b>0?b:0)},0)||1;
+  bar+='<div style="font-size:10px;color:#6b6b68;margin-bottom:3px">Gross profit</div>';
+  bar+='<div style="display:flex;height:24px;border-radius:6px;overflow:hidden;margin-bottom:.75rem;background:#f5f4f0">';
+  sGPs.forEach(function(v,i){
+    var w=Math.max(0,v/tot*100); // use same scale as revenue for visual comparison
+    var bg=v>=0?sColors[i]:'#A32D2D';
+    bar+='<div style="width:'+w+'%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:500">'+(w>8?streams[i]:'')+'</div>';
+  });
+  bar+='</div>';
+  el('dk-contrib-bar').innerHTML=bar;
+  el('dk-contrib-leg').innerHTML=streams.map(function(s,i){
+    var rev=sRevs[i],gp=sGPs[i],margin=rev>0?Math.round(gp/rev*100):0;
+    var gpColor=gp>=0?'#0F6E56':'#A32D2D';
+    return'<div style="display:flex;align-items:center;gap:8px;font-size:12px">'+
+      '<span class="ldot" style="background:'+sColors[i]+'"></span>'+
+      '<span style="color:#6b6b68;min-width:100px">'+s+'</span>'+
+      '<span style="font-weight:500">'+fsar(rev)+'</span>'+
+      '<span style="color:#6b6b68">'+Math.round(rev/tot*100)+'%</span>'+
+      '<span style="color:'+gpColor+';font-weight:500;margin-left:8px">GP '+fsar(gp)+'</span>'+
+      '<span style="color:#6b6b68;font-size:11px">'+margin+'% margin</span>'+
+    '</div>';
+  }).join('');
+
+  // Waterfall
+  var wfl=['Revenue','Sub COGS','Salaries','Rent','Utilities','GP/EBITDA','Dep','EBIT'];
+  var wfv=[r.trev,-r.subCOGS,-r.manpower,-r.rent,-(r.elec+r.maint+r.clean),r.gp,-r.dep,r.ebit];
+  var wfc=wfv.map(function(v,i){return[0,5,7].indexOf(i)>=0?(v>=0?'#0F6E56':'#A32D2D'):'#E24B4A'});
+  upsertChart('waterfallChart','bar',{labels:wfl,datasets:[{data:wfv.map(function(v){return+(v/1e6).toFixed(2)}),backgroundColor:wfc,borderRadius:4,barPercentage:0.65}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return'SAR '+ctx.parsed.y.toFixed(1)+'M'}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+
+  // Contribution margin chart - revenue vs GP per stream
+  var gpMargins=sGPs.map(function(v,i){return sRevs[i]>0?Math.round(v/sRevs[i]*100):0});
+  upsertChart('contribChart','bar',{
+    labels:streams,
+    datasets:[
+      {label:'Revenue',data:sRevs.map(function(v){return+(v/1e6).toFixed(2)}),backgroundColor:sColors.map(function(c){return c+'33'}),borderColor:sColors,borderWidth:2,borderRadius:4,barPercentage:0.6,categoryPercentage:0.8},
+      {label:'Stream GP',data:sGPs.map(function(v){return+(v/1e6).toFixed(2)}),backgroundColor:sColors,borderRadius:4,barPercentage:0.6,categoryPercentage:0.8}
+    ]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var i=ctx.dataIndex;if(ctx.datasetIndex===1)return['GP: SAR '+ctx.parsed.y.toFixed(1)+'M','Margin: '+gpMargins[i]+'%'];return'Revenue: SAR '+ctx.parsed.y.toFixed(1)+'M'}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+}
+
+function renderScenarios(r){
+  var bearU=(SL['sc_bear']||25)/100;
+  var baseU=(SL['sc_base']||g('util'))/100;
+  var bullU=(SL['sc_bull']||85)/100;
+  var bear=calcYr(bearU),base2=calcYr(baseU),bull=calcYr(bullU);
+  sv('sc-bear-lbl','Bear ('+Math.round(bearU*100)+'%)');
+  sv('sc-base-lbl','Base ('+Math.round(baseU*100)+'%)');
+  sv('sc-bull-lbl','Bull ('+Math.round(bullU*100)+'%)');
+  function setS(pfx,rr){
+    sv(pfx+'-r',fsar(rr.trev));
+    sv(pfx+'-e',sfmt(rr.ebitda));
+    var ei=el(pfx+'-i');if(ei){ei.textContent=sfmt(rr.ebit);ei.style.color=rr.ebit>=0?'#0F6E56':'#A32D2D';}
+    var lc=el(pfx+'-lcr');if(lc){lc.textContent=rr.lcr.toFixed(2)+'x';lc.style.color=rr.lcr>=2?'#0F6E56':rr.lcr>=1.5?'#854F0B':'#A32D2D';}
+  }
+  setS('s-bear',bear);setS('s-base',base2);setS('s-bull',bull);
+  upsertChart('scChart','bar',{
+    labels:['Bear ('+Math.round(bearU*100)+'%)','Base ('+Math.round(baseU*100)+'%)', 'Bull ('+Math.round(bullU*100)+'%)'],
+    datasets:[
+      {label:'Revenue',data:[bear.trev/1e6,base2.trev/1e6,bull.trev/1e6].map(function(v){return+v.toFixed(2)}),backgroundColor:'rgba(55,138,221,0.25)',borderColor:'#378ADD',borderWidth:2,borderRadius:4,barPercentage:0.5},
+      {label:'EBITDA',data:[bear.ebitda/1e6,base2.ebitda/1e6,bull.ebitda/1e6].map(function(v){return+v.toFixed(2)}),backgroundColor:'#0F6E56',borderRadius:4,barPercentage:0.5},
+      {label:'EBIT',data:[bear.ebit/1e6,base2.ebit/1e6,bull.ebit/1e6].map(function(v){return+v.toFixed(2)}),backgroundColor:'rgba(133,79,11,0.7)',borderRadius:4,barPercentage:0.5}
+    ]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+}
+
+function renderModel(r){
+  renderScenarios(r);
+}
+
+function renderInvestment(r,fc){
+  var items=[
+    {l:'Build-out/fit-out',v:g('inv_buildout')*1e6},{l:'FF&E',v:g('inv_ffe')*1e6},
+    {l:'AV & production',v:g('inv_av')*1e6},{l:'Kitchen equipment',v:g('inv_kitchen')*1e6},
+    {l:'MEP works',v:g('inv_mep')*1e6},
+    {l:'Contingency ('+g('inv_contingency')+'%)',v:(g('inv_buildout')+g('inv_ffe')+g('inv_av')+g('inv_kitchen')+g('inv_mep'))*1e6*g('inv_contingency')/100},
+    {l:'Licenses',v:g('inv_licenses')*1e6},{l:'Pre-opening',v:g('inv_preopening')*1e6},
+    {l:'Marketing',v:g('inv_marketing')*1e6},{l:'Working capital',v:g('inv_wc')*1e6}
+  ];
+  var total=items.reduce(function(a,b){return a+b.v},0);
+  sv('inv-total','SAR '+fmt(total/1e6)+'M');
+  var ic=['#185FA5','#0F6E56','#B8860B','#7B3FA0','#E24B4A','#888780','#1D9E75','#D85A30','#534AB7','#3C3489'];
+  upsertChart('invPie','doughnut',{labels:items.map(function(x){return x.l}),datasets:[{data:items.map(function(x){return+(x.v/1e6).toFixed(2)}),backgroundColor:ic,borderWidth:2,borderColor:'transparent',hoverOffset:4}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return ctx.label+': SAR '+ctx.parsed.toFixed(1)+'M'}}}}});
+  el('inv-legend').innerHTML=items.map(function(x,i){return'<div style="display:flex;align-items:center;gap:4px;font-size:11px"><span class="ldot" style="background:'+ic[i]+'"></span><span style="color:#6b6b68">'+x.l+'</span> <strong>SAR '+fmt(x.v/1e6)+'M</strong></div>'}).join('');
+  var debt=total*g('inv_debtpct')/100,equity=total-debt,interest=debt*g('inv_debtrate')/100;
+  var irrcfs=[-total].concat(fc.map(function(yr){return yr.ebitda-interest}));
+  var irr=calcIRR(irrcfs)*100,npv=calcNPV(irrcfs,g('inv_discount'));
+  var roi=total>0?r.ebit/total*100:0,coc=total>0?r.ebitda/total*100:0,invpb=r.ebitda>0?(total/r.ebitda).toFixed(1):null;
+  function setM(id,v,cls){var e=el(id);if(e){e.textContent=v;e.className='mv '+cls}}
+  setM('inv-roi',pctf(roi),roi>=10?'green':roi>=5?'amber':'red');
+  setM('inv-coc',pctf(coc),coc>=15?'green':coc>=8?'amber':'red');
+  setM('inv-payback',invpb?invpb+' yrs':'n/a',invpb&&+invpb<=7?'green':invpb?'amber':'red');
+  setM('inv-npv',fsar(npv),npv>=0?'green':'red');sv('inv-npv-sub','at '+g('inv_discount')+'% discount');
+  setM('inv-irr',isFinite(irr)?pctf(irr):'n/a',isFinite(irr)&&irr>=15?'green':isFinite(irr)?'amber':'red');
+  setM('inv-equity',fsar(equity),'');sv('inv-equity-sub',pct(100-g('inv_debtpct'))+'% eq / '+pct(g('inv_debtpct'))+'% debt');
+}
+
+function renderForecast(r,fc){
+  // Ensure canvases have height
+  ['fcChart','cumulChart'].forEach(function(id){
+    var c=el(id);if(c&&c.parentElement)c.parentElement.style.minHeight='220px';
+  });
+  el('fc-head').innerHTML='<tr><th>Metric</th>'+occArr.map(function(o,i){return'<th>Y'+(i+1)+' ('+o+'%)</th>'}).join('')+'</tr>';
+  var frows=[
+    {l:'Paid days',fn:function(yr){return yr.days+'d'}},
+    {l:'Net venue sqm',fn:function(yr,i){return netAreaYr[i].toLocaleString()+' sqm'}},
+    {l:'CH attach %',fn:function(yr,i){return chAttachYr[i]+'%'}},
+    {l:'Rahi attach %',fn:function(yr,i){return rcAttachYr[i]+'%'}},
+    {l:'Act. attach %',fn:function(yr,i){return acAttachYr[i]+'%'}},
+    {l:'Total Revenue',fn:function(yr){return fsar(yr.trev)},c:'fsub'},
+    {l:'Total COGS',fn:function(yr){return'('+fsar(yr.tcogs)+')'}},
+    {l:'Gross Profit (EBITDA)',fn:function(yr){return fsar(yr.gp)},c:'fgp'},
+    {l:'GP Margin',fn:function(yr){return pctf(safe(yr.gp/yr.trev)*100)}},
+    {l:'Depreciation',fn:function(yr){return'('+fsar(yr.dep)+')'}},
+    {l:'EBIT',fn:function(yr){return fsar(yr.ebit)},c:'febit'},
+    {l:'EBIT Margin',fn:function(yr){return pctf(safe(yr.ebit/yr.trev)*100)}},
+    {l:'Lease Coverage',fn:function(yr){return yr.lcr.toFixed(2)+'x'}}
+  ];
+  el('fc-body').innerHTML=frows.map(function(row){return'<tr class="'+(row.c||'')+'"><td>'+row.l+'</td>'+fc.map(function(yr,i){return'<td>'+(row.fn.length>1?row.fn(yr,i):row.fn(yr))+'</td>'}).join('')+'</tr>'}).join('');
+  var fcL=occArr.map(function(o,i){return'Y'+(i+1)+' ('+o+'%)'});
+  upsertChart('fcChart','bar',{labels:fcL,datasets:[
+    {label:'Revenue',data:fc.map(function(yr){return+(yr.trev/1e6).toFixed(2)}),backgroundColor:'rgba(55,138,221,0.25)',borderColor:'#378ADD',borderWidth:2,borderRadius:4,barPercentage:0.6},
+    {label:'EBITDA',data:fc.map(function(yr){return+(yr.ebitda/1e6).toFixed(2)}),backgroundColor:'#0F6E56',borderRadius:4,barPercentage:0.6},
+    {label:'EBIT',data:fc.map(function(yr){return+(yr.ebit/1e6).toFixed(2)}),backgroundColor:'rgba(133,79,11,0.7)',borderRadius:4,barPercentage:0.6}
+  ]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+  var inv=calcTotalInv(),cumul=-inv,cD=[-inv/1e6];
+  fc.forEach(function(yr){cumul+=yr.ebitda;cD.push(+(cumul/1e6).toFixed(2))});
+  var cL=['Y0'].concat(occArr.map(function(o,i){return'Y'+(i+1)}));
+  upsertChart('cumulChart','bar',{labels:cL,datasets:[{data:cD,backgroundColor:cD.map(function(v){return v>=0?'#0F6E56':'#A32D2D'}),borderRadius:4,barPercentage:0.6}]},{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+}
+
+function renderRealEstate(r,fc){
+  var rent=g('rent')*1e6;
+  var totalArea=g('re_totalarea')>0?g('re_totalarea'):34000; // total leased area
+  var netArea=g('re_netarea')>0?g('re_netarea'):15000;       // revenue-generating area
+  var nonRevArea=totalArea-netArea;
+  var efficiency=totalArea>0?netArea/totalArea*100:0;
+  var landVal=g('re_landval')*1e6;
+  var lt=g('re_term');
+  var app=g('re_app')/100;
+  var mktY=g('re_mktyield')/100;
+  // SQM price based on TOTAL leased area (what you actually pay for)
+  var sqmMktPrice=totalArea>0&&landVal>0?landVal/totalArea:0;
+  var yieldCalc=landVal>0?rent/landVal*100:0;
+  // Rent per day on total area vs net area
+  var sqmDayTotal=totalArea>0&&g('days')>0?rent/totalArea/Math.max(1,g('days')):0;
+  var sqmDayNet=netArea>0&&g('days')>0?rent/netArea/Math.max(1,g('days')):0;
+  var impl=landVal>0?landVal:(mktY>0?rent/mktY:0);
+  var endv=impl*Math.pow(1+app,lt);
+  var ryield=impl>0?rent/impl*100:0;
+  var totalRent=rent*lt;
+
+  sv('re-auto-rent','SAR '+(rent/1e6).toFixed(1)+'M / yr');
+  sv('re-efficiency',pctf(efficiency)+' ('+fmt(netArea)+' of '+fmt(totalArea)+' sqm)');
+  sv('re-nonrev-area',fmt(nonRevArea)+' sqm (parking + services)');
+  sv('re-sqm-price',sqmMktPrice>0?'SAR '+fmt(sqmMktPrice)+'/sqm':'-');
+  sv('re-yield-calc',yieldCalc>0?pctf(yieldCalc):'-');
+  sv('re-total-rent',fsar(totalRent));
+  sv('re-your-sqm',totalArea>0?'SAR '+(rent/totalArea).toFixed(1)+'/sqm/yr':'-');
+
+  var vdr=g('sqm')*(g('hall')/100)*g('price');
+  var bdr=r.days>0?r.trev/r.days:0;
+  sv('re-dv',vdr>0?Math.ceil(rent/vdr)+' days':'-');
+  sv('re-da',bdr>0?Math.ceil(rent/bdr)+' days':'-');
+  var rrp=r.trev>0?rent/r.trev*100:0,rebitda=r.ebitda>0?rent/r.ebitda*100:0;
+  var deadCost=totalArea>0?rent*nonRevArea/totalArea:0;
+  function setM2(id,v,cls){var e=el(id);if(e){e.textContent=v;e.className='mv '+cls}}
+  setM2('re-eff-big',pctf(efficiency),efficiency>=60?'green':efficiency>=40?'amber':'red');
+  sv('re-eff-sub',fmt(netArea)+' rev / '+fmt(totalArea)+' total sqm');
+  setM2('re-dead-cost',fsar(deadCost),'red');
+  setM2('re-rrp',pctf(rrp),rrp<20?'green':rrp<35?'amber':'red');
+  setM2('re-rgp',pctf(rebitda),rebitda<40?'green':rebitda<65?'amber':'red');
+
+  upsertChart('re-trend','line',{
+    labels:occArr.map(function(o,i){return'Y'+(i+1)+' ('+o+'%)'}),
+    datasets:[{label:'Rent % Rev',data:fc.map(function(yr){return yr.trev>0?+(rent/yr.trev*100).toFixed(1):0}),borderColor:'#B8860B',backgroundColor:'rgba(184,134,11,0.08)',tension:0.3,fill:true,pointRadius:4}]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:function(v){return v+'%'}}}}});
+
+  // Rent per year bar chart
+  upsertChart('re-esc','bar',{
+    labels:rentPerYear.map(function(v,i){return'Y'+(i+1)}),
+    datasets:[{
+      label:'Annual rent (SAR M)',
+      data:rentPerYear.map(function(v){return v}),
+      backgroundColor:'#185FA5',borderRadius:4,barPercentage:0.6
+    }]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return'SAR '+ctx.parsed.y.toFixed(1)+'M'}}}},scales:{x:{grid:{display:false}},y:{min:0,ticks:{callback:function(v){return v+'M'}}}}});
+
+  // Benchmark chart with all venues
+  var bNames=VENUES.map(function(v){return v.n}).concat(['NOX Exhibition (this model)']);
+
+  var bColors=VENUES.map(function(v){
+    if(v.n.indexOf('Camp')>=0)return'#B5D4F4';
+    if(v.n.indexOf('Alrayyan')>=0||v.n.indexOf('Hall')>=0)return'#185FA5';
+    if(v.n.indexOf('Farm')>=0)return'#888780';
+    return'#85B7EB';
+  }).concat(['#0F6E56']);
+  var myYearlyRentalSqm=totalArea>0?rent/totalArea:0;
+  var bYearlyRental=VENUES.map(function(v){return v.size>0?+(v.rent/v.size).toFixed(1):0}).concat([+myYearlyRentalSqm.toFixed(1)]);
+  var bRatios=VENUES.map(function(v){return(v.ratio*100).toFixed(1)+'%'}).concat([yieldCalc>0?pctf(yieldCalc):'?']);
+  upsertChart('re-bench','bar',{
+    labels:bNames,
+    datasets:[{data:bYearlyRental,backgroundColor:bColors,borderRadius:4,barPercentage:0.65}]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){var i=ctx.dataIndex;return['Yearly rental: SAR '+ctx.parsed.y.toFixed(1)+'/sqm/yr','Rental/price ratio: '+bRatios[i]]}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45}},y:{ticks:{callback:function(v){return'SAR '+v+'/sqm'}}}}});
+
+  // Rental-to-price ratio chart
+  var rRatios=VENUES.map(function(v){return+(v.ratio*100).toFixed(2)});
+  var myRatio=yieldCalc>0?+yieldCalc.toFixed(2):0;
+  var rLabels=VENUES.map(function(v){return v.n}).concat(['NOX Exhibition (this model)']);
+  var rData=rRatios.concat([myRatio]);
+  var rColors=VENUES.map(function(v){
+    if(v.n.indexOf('Camp')>=0)return'#B5D4F4';
+    if(v.n.indexOf('Alrayyan')>=0)return'#185FA5';
+    if(v.n.indexOf('Farm')>=0)return'#888780';
+    return'#85B7EB';
+  }).concat(['#0F6E56']);
+  upsertChart('re-ratio','bar',{
+    labels:rLabels,
+    datasets:[{data:rData,backgroundColor:rColors,borderRadius:4,barPercentage:0.65}]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(ctx){return'Rental/price ratio: '+ctx.parsed.y.toFixed(2)+'%'}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45}},y:{ticks:{callback:function(v){return v+'%'}}}}});
+
+  sv('re-impl',fsar(impl));sv('re-impl-sub',landVal>0?'SAR '+fmt(sqmMktPrice)+'/sqm x '+fmt(totalArea)+' sqm (total leased)':'rent / '+(mktY*100).toFixed(1)+'% yield');
+  setM2('re-yield',pctf(ryield),ryield>3?'green':'amber');
+  sv('re-endv',fsar(endv));sv('re-endv-sub','at '+(app*100)+'% appreciation / '+lt+' yrs');
+  sv('re-gain',fsar(endv-impl));
+  var yrs=[];for(var y=0;y<=lt;y+=Math.max(1,Math.round(lt/6))){yrs.push(y)}if(yrs[yrs.length-1]!==lt)yrs.push(lt);
+  upsertChart('re-valchart','line',{
+    labels:yrs.map(function(y){return'Yr '+y}),
+    datasets:[
+      {label:'Asset value',data:yrs.map(function(y){return+(impl*Math.pow(1+app,y)/1e6).toFixed(1)}),borderColor:'#0F6E56',backgroundColor:'rgba(15,110,86,0.08)',tension:0.3,fill:true,pointRadius:3},
+      {label:'Cumul rent',data:yrs.map(function(y){return+(rent*y/1e6).toFixed(1)}),borderColor:'#A32D2D',backgroundColor:'rgba(163,45,45,0.05)',tension:0.3,fill:true,pointRadius:3,borderDash:[5,5]}
+    ]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+
+  sv('re-rent25',fsar(totalRent));sv('re-purchase',fsar(impl));sv('re-eq25',fsar(endv));
+  var nadv=endv-impl;setM2('re-adv',fsar(nadv),nadv>0?'green':'red');
+  sv('re-note','Total leased: '+fmt(totalArea)+' sqm. Revenue-generating: '+fmt(netArea)+' sqm ('+pctf(efficiency)+' efficiency). Annual rent SAR '+fmt(rent)+'/yr over '+lt+' years = SAR '+fmt(totalRent)+' total. Land value SAR '+fmt(impl)+' projected to SAR '+fmt(endv)+' — equity gain SAR '+fmt(nadv)+'. For strategic benchmarking only.');
+}
+
+function renderCashFlow(r,fc){
+  var rent=g('rent')*1e6;
+  var capex=g('capex')*1e6;
+  // Rent-free months derived from rentPerYear (years where rent=0)
+  var rentFreeYrsCount=rentPerYear.filter(function(v){return v===0}).length;
+  var rentFree=rentFreeYrsCount*12;
+  var rentAdv=Math.max(1,Math.round(g('cf_rentadv')));
+  var fitout=Math.max(1,Math.round(g('cf_fitout')));
+  var leadtime=Math.round(g('cf_leadtime'));
+  var dep1pct=g('cf_dep1pct')/100;
+  var openCash=g('cf_opencash')*1e6;
+  var mgr=g('mgr')*1000,lab=g('lab')*1000;
+  var elec=g('elec')*1000,maint=g('maint')*1000,clean=g('clean')*1000;
+  var firstEventMonth=fitout+leadtime+1;
+  sv('cf-first-event','Month '+firstEventMonth);
+  var monthlyRent=rent/12,monthlySalaries=(mgr+lab)/12,monthlyUtils=(elec+maint+clean)/12;
+  var capexPerMonth=capex/fitout;
+  var months=[];var cumul=openCash;var minBal=openCash,minBalM=0,beM=null;
+  for(var m=1;m<=24;m++){
+    var isOp=m>=firstEventMonth,isFit=m<=fitout;
+    var occ=m<=12?occArr[0]/100:occArr[1]/100;
+    var baseUtil=g('util')/100||0.01;
+    var mRev=isOp?r.trev/12*(occ/baseUtil):0;
+    var mColl=isOp?mRev:0;
+    var mCOGS=isOp?r.subCOGS/12*(occ/baseUtil):0;
+    var mSal=monthlySalaries;
+    var mUtil=monthlyUtils;
+    var mRentOut=0;
+    if(m>rentFree){var msr=m-rentFree;if(msr===1||(msr%rentAdv===1)){mRentOut=monthlyRent*rentAdv;}}
+    var mCapex=isFit?capexPerMonth:0;
+    var mIn=mColl+(m===1?openCash:0);
+    var mOut=mCOGS+mSal+mUtil+mRentOut+mCapex;
+    var mNet=mIn-mOut;
+    if(m===1){cumul=openCash+mColl-mOut;}else{cumul+=mNet;}
+    if(cumul<minBal){minBal=cumul;minBalM=m;}
+    if(beM===null&&cumul>0&&m>1)beM=m;
+    months.push({m:m,phase:isFit?'fitout':(isOp?'operating':'preopen'),rev:mRev,coll:mColl,cogs:mCOGS,sal:mSal,util:mUtil,rent:mRentOut,capex:mCapex,net:mNet,cumul:cumul});
+  }
+  function setK(id,v,cls){var e=el(id);if(e){e.textContent=v;e.className='mv '+cls}}
+  setK('cf-gap',fsar(Math.abs(Math.min(0,minBal))),minBal>=0?'green':'red');
+  setK('cf-bem',beM?'Month '+beM:'Beyond Y2',beM&&beM<=18?'green':'amber');
+  setK('cf-y1',sfmt(months[11].cumul),months[11].cumul>=0?'green':'red');
+  setK('cf-y2',sfmt(months[23].cumul),months[23].cumul>=0?'green':'red');
+
+  upsertChart('cf-cumul','bar',{
+    labels:months.map(function(m){return'M'+m.m}),
+    datasets:[
+      {label:'Net',data:months.map(function(m){return+(m.net/1e6).toFixed(2)}),backgroundColor:months.map(function(m){return m.net>=0?'rgba(15,110,86,0.5)':'rgba(163,45,45,0.5)'}),borderRadius:3,barPercentage:0.7,yAxisID:'y'},
+      {label:'Cumulative',data:months.map(function(m){return+(m.cumul/1e6).toFixed(2)}),type:'line',borderColor:'#185FA5',backgroundColor:'transparent',tension:0.3,pointRadius:2,yAxisID:'y'}
+    ]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+
+  var mH=['Month','Phase','Revenue','Collected','Sub COGS','Salaries','Utilities','Rent','Capex','Net CF','Cumul CF'];
+  el('cf-mhead').innerHTML='<tr>'+mH.map(function(h,i){return i===0?'<th style="text-align:left">'+h+'</th>':'<th>'+h+'</th>'}).join('')+'</tr>';
+  el('cf-mbody').innerHTML=months.map(function(m){
+    return'<tr>'+
+      '<td style="text-align:left;font-weight:500;color:#1a1a18">M'+m.m+'</td>'+
+      '<td style="text-align:left"><span class="cf-badge '+m.phase+'">'+(m.phase==='fitout'?'Fit-out':m.phase==='operating'?'Operating':'Pre-open')+'</span></td>'+
+      '<td>'+fsar(m.rev)+'</td>'+
+      '<td style="color:#0F6E56">'+fsar(m.coll)+'</td>'+
+      '<td style="color:#A32D2D">'+(m.cogs>0?'('+fsar(m.cogs)+')':'-')+'</td>'+
+      '<td style="color:#A32D2D">('+fsar(m.sal)+')</td>'+
+      '<td style="color:#A32D2D">'+(m.util>0?'('+fsar(m.util)+')':'-')+'</td>'+
+      '<td style="color:#A32D2D">'+(m.rent>0?'('+fsar(m.rent)+')':'-')+'</td>'+
+      '<td style="color:#A32D2D">'+(m.capex>0?'('+fsar(m.capex)+')':'-')+'</td>'+
+      '<td style="font-weight:500;color:'+(m.net>=0?'#0F6E56':'#A32D2D')+'">'+sfmt(m.net)+'</td>'+
+      '<td style="font-weight:500;color:'+(m.cumul>=0?'#0F6E56':'#A32D2D')+'">'+sfmt(m.cumul)+'</td>'+
+    '</tr>';
+  }).join('');
+
+  var annRows=fc.map(function(yr,i){
+    var rentYr=rentPerYear[i]*1e6;
+    var salYr=mgr+lab,utilYr=elec+maint+clean;
+    var capexYr=i===0?capex:0;
+    var inflow=yr.trev;
+    var outflow=yr.subCOGS+salYr+utilYr+rentYr+capexYr;
+    return{yr:i+1,occ:occArr[i],inflow:inflow,cogs:yr.subCOGS,sal:salYr,util:utilYr,rent:rentYr,capex:capexYr,outflow:outflow,net:inflow-outflow,ebitda:yr.ebitda};
+  });
+  el('cf-ahead').innerHTML='<tr><th style="text-align:left">Metric</th>'+annRows.map(function(r2){return'<th>Y'+r2.yr+' ('+r2.occ+'%)</th>'}).join('')+'</tr>';
+  var aM=[
+    {l:'Revenue',fn:function(r2){return fsar(r2.inflow)},c:'fsub'},
+    {l:'Sub COGS (CH + Rahi + Act.)',fn:function(r2){return'('+fsar(r2.cogs)+')'}},
+    {l:'Salaries',fn:function(r2){return'('+fsar(r2.sal)+')'}},
+    {l:'Rent paid',fn:function(r2){return r2.rent>0?'('+fsar(r2.rent)+')':'Free'}},
+    {l:'Utilities',fn:function(r2){return'('+fsar(r2.util)+')'}},
+    {l:'Capex',fn:function(r2){return r2.capex>0?'('+fsar(r2.capex)+')':'-'}},
+    {l:'Net cash flow',fn:function(r2){return sfmt(r2.net)},c:'fgp'},
+    {l:'EBITDA (P&L memo)',fn:function(r2){return fsar(r2.ebitda)},c:'febit'}
+  ];
+  el('cf-abody').innerHTML=aM.map(function(row){return'<tr class="'+(row.c||'')+'"><td>'+row.l+'</td>'+annRows.map(function(r2){return'<td>'+row.fn(r2)+'</td>'}).join('')+'</tr>'}).join('');
+
+  upsertChart('cf-annual','bar',{
+    labels:annRows.map(function(r2){return'Y'+r2.yr}),
+    datasets:[
+      {label:'Revenue',data:annRows.map(function(r2){return+(r2.inflow/1e6).toFixed(1)}),backgroundColor:'rgba(55,138,221,0.25)',borderColor:'#378ADD',borderWidth:2,borderRadius:4,barPercentage:0.5},
+      {label:'Outflows',data:annRows.map(function(r2){return+(r2.outflow/1e6).toFixed(1)}),backgroundColor:'rgba(163,45,45,0.6)',borderRadius:4,barPercentage:0.5},
+      {label:'Net CF',data:annRows.map(function(r2){return+(r2.net/1e6).toFixed(1)}),type:'line',borderColor:'#0F6E56',backgroundColor:'transparent',tension:0.3,pointRadius:5,pointBackgroundColor:annRows.map(function(r2){return r2.net>=0?'#0F6E56':'#A32D2D'})}
+    ]
+  },{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:10,font:{size:11}}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:function(v){return v+'M'}}}}});
+}
+
+// ===================== RENT PER YEAR =====================
+var rentPerYear=[0,0,6.5,6.5,6.5]; // Y1-Y2 free (SAR 0), Y3-Y5 at base rent
+// Attach rates per year [Y1,Y2,Y3,Y4,Y5] - default ramps up over time
+var chAttachYr=[20,25,30,35,40];
+var rcAttachYr=[20,25,30,35,40];
+var acAttachYr=[15,20,25,30,35];
+var netAreaYr=[15000,15000,15000,15000,15000]; // net revenue sqm per year // SAR M per year, editable
+
+function buildAttachYrInputs(){
+  var w=document.getElementById('attach-yr-inputs');if(!w)return;
+  var streams=[
+    {label:'Net venue sqm',arr:netAreaYr,color:'#185FA5'},
+    {label:'Creative House',arr:chAttachYr,color:'#0F6E56'},
+    {label:'Rahi Catering',arr:rcAttachYr,color:'#B8860B'},
+    {label:'Activations',arr:acAttachYr,color:'#7B3FA0'}
+  ];
+  w.innerHTML='';
+  streams.forEach(function(stream){
+    var row=document.createElement('div');
+    row.style.cssText='display:grid;grid-template-columns:120px repeat(5,1fr);gap:8px;margin-bottom:8px;align-items:center';
+    var lbl=document.createElement('div');
+    lbl.style.cssText='font-size:12px;font-weight:500;color:'+stream.color;
+    lbl.textContent=stream.label;
+    row.appendChild(lbl);
+    stream.arr.forEach(function(v,idx){
+      var cell=document.createElement('div');
+      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=1;ni.value=v;
+      ni.style.cssText='width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 6px;font-size:12px;font-weight:500;text-align:center;background:#fff';
+      ni.oninput=function(){stream.arr[idx]=parseInt(this.value)||0;onUpdate()};
+      var pct=document.createElement('div');pct.style.cssText='font-size:10px;color:#9b9b97;text-align:center;margin-top:2px';pct.textContent='%';
+      cell.appendChild(ni);cell.appendChild(pct);
+      row.appendChild(cell);
+    });
+    w.appendChild(row);
+  });
+}
+
+function buildRentPerYear(){
+  var w=document.getElementById('rent-per-year-inputs');
+  if(!w)return;
+  w.innerHTML='';
+  var grid=document.createElement('div');
+  grid.style.cssText='display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:.5rem';
+  rentPerYear.forEach(function(rv,idx){
+    var box=document.createElement('div');
+    box.style.cssText='background:#f5f4f0;border-radius:8px;padding:.6rem .75rem;text-align:center';
+    var lbl=document.createElement('div');
+    lbl.style.cssText='font-size:11px;color:#6b6b68;margin-bottom:4px';
+    lbl.textContent='Year '+(idx+1);
+    var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=0.5;ni.value=rv;
+    ni.style.cssText='width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 6px;font-size:13px;font-weight:500;text-align:center;background:#fff';
+    ni.oninput=function(){rentPerYear[idx]=parseFloat(this.value)||0;onUpdate()};
+    box.appendChild(lbl);box.appendChild(ni);
+    grid.appendChild(box);
+  });
+  w.appendChild(grid);
+}
+
+
+function initSliders(){
+  // P&L Model
+  mkSl('sl-sqm','sqm','Venue size (sqm)',0,50000,500,15000);
+  mkSl('sl-price','price','Price per sqm per day (SAR)',0,500,1,25);
+  mkSl('sl-hall','hall','% of hall booked per event',0,100,1,70);
+  mkSl('sl-days','days','Available event days / year',0,365,1,365);
+  mkSl('sl-util','util','Base utilisation rate (%)',0,100,1,33);
+  mkSl('sl-ch','ch','Creative House attach (%)',0,100,1,30);
+  mkSl('sl-cht','cht','Creative House avg ticket (SAR)',0,500000,1000,85000);
+  mkSl('sl-chm','chm','Creative House gross margin (%)',0,100,1,50);
+  mkSl('sl-rc','rc','Rahi Catering attach (%)',0,100,1,30);
+  mkSl('sl-rct','rct','Rahi avg ticket (SAR)',0,500000,1000,25000);
+  mkSl('sl-rcm','rcm','Rahi gross margin (%)',0,100,1,50);
+  mkSl('sl-ac','ac','Activations attach (%)',0,100,1,30);
+  mkSl('sl-act','act','Activations avg ticket (SAR)',0,200000,500,25000);
+  mkSl('sl-acm','acm','Activations gross margin (%)',0,100,1,35);
+  mkSl('sl-rent','rent','Annual rent (SAR M)',0,100,0.5,6.5);
+  mkSl('sl-elec','elec','Electricity / yr (SAR K)',0,5000,10,400);
+  mkSl('sl-maint','maint','Maintenance / yr (SAR K)',0,2000,5,400);
+  mkSl('sl-clean','clean','Cleaning / yr (SAR K)',0,2000,5,200);
+  mkSl('sl-mgr','mgr','Managers / yr (SAR K)',0,10000,10,205);
+  mkSl('sl-lab','lab','Labour / yr (SAR K)',0,5000,10,132);
+  mkSl('sl-capex','capex','Total capex (SAR M)',0,500,1,45);
+  mkSl('sl-life','life','Asset useful life (years)',1,50,1,15);
+  // Investment
+  mkSl('sl-inv-buildout','inv_buildout','Build-out / fit-out (SAR M)',0,300,1,16);
+  mkSl('sl-inv-ffe','inv_ffe','FF&E (SAR M)',0,100,1,3);
+  mkSl('sl-inv-av','inv_av','AV & production (SAR M)',0,100,1,3);
+  mkSl('sl-inv-kitchen','inv_kitchen','Kitchen equipment (SAR M)',0,50,0.5,0.5);
+  mkSl('sl-inv-mep','inv_mep','MEP works (SAR M)',0,100,1,3);
+  mkSl('sl-inv-licenses','inv_licenses','Licenses & permits (SAR M)',0,20,0.1,1);
+  mkSl('sl-inv-preopening','inv_preopening','Pre-opening costs (SAR M)',0,20,0.1,1);
+  mkSl('sl-inv-marketing','inv_marketing','Launch marketing (SAR M)',0,20,0.1,1);
+  mkSl('sl-inv-wc','inv_wc','Working capital (SAR M)',0,50,0.5,3);
+  mkSl('sl-inv-contingency','inv_contingency','Contingency % of hard costs',0,30,1,5);
+  mkSl('sl-inv-discount','inv_discount','Discount rate / WACC (%)',0,30,0.5,12);
+  mkSl('sl-inv-debtpct','inv_debtpct','Debt financing (%)',0,100,1,0);
+  mkSl('sl-inv-debtrate','inv_debtrate','Debt interest rate (%)',0,20,0.5,6);
+  // Real estate
+  mkSl('sl-re-totalarea','re_totalarea','Total leased area (sqm)',0,100000,500,34000);
+  mkSl('sl-re-netarea','re_netarea','Net revenue-generating area (sqm)',0,50000,500,15000);
+  mkSl('sl-re-landval','re_landval','Land market value (SAR M)',0,2000,5,345);
+  mkSl('sl-re-term','re_term','Lease term (years)',1,50,1,25);
+  SL['re_app']=6;
+  SL['sc_bear']=25;
+  SL['sc_base']=33;
+  SL['sc_bull']=85;
+  SL['re_mktyield']=4.7;
+  // Cash flow
+  mkSl('sl-cf-rentfree','cf_rentfree','Rent-free period (months)',0,36,1,24);
+  mkSl('sl-cf-rentadv','cf_rentadv','Rent advance cycle (months)',1,24,1,6);
+  mkSl('sl-cf-fitout','cf_fitout','Fit-out duration (months)',1,24,1,3);
+  mkSl('sl-cf-leadtime','cf_leadtime','Lead time to first event (months)',0,12,1,0);
+  mkSl('sl-cf-dep1pct','cf_dep1pct','Client deposit on confirmation (%)',0,100,5,50);
+  mkSl('sl-cf-dep2days','cf_dep2days','Client balance days before event',0,90,5,30);
+  mkSl('sl-cf-cogspre','cf_cogspre','COGS paid before event (%)',0,100,10,50);
+  mkSl('sl-cf-cogspost','cf_cogspost','COGS balance paid days after event',0,60,5,10);
+  mkSl('sl-cf-opencash','cf_opencash','Opening cash / working capital (SAR M)',0,50,0.5,3);
+}
+
+// ===================== LOCALSTORAGE =====================
+var LS_KEY='nox_ec_v9';
+
+function saveToStorage(){
+  try{
+    var data={sl:{},occ:occArr.slice()};
+    Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
+    localStorage.setItem(LS_KEY,JSON.stringify(data));
+  }catch(e){}
+}
+
+function loadFromStorage(){
+  try{
+    var raw=localStorage.getItem(LS_KEY);
+    if(!raw)return false;
+    var data=JSON.parse(raw);
+    if(data.sl){
+      Object.keys(data.sl).forEach(function(k){
+        SL[k]=data.sl[k];
+        var sl=document.getElementById('sl_'+k);
+        var ni=document.getElementById('ni_'+k);
+        if(sl)sl.value=data.sl[k];
+        if(ni)ni.value=data.sl[k];
+        // Also restore scenario sliders
+        var scSl=document.getElementById('sc-'+k.replace('sc_','')+'-sl');
+        var scNi=document.getElementById('sc-'+k.replace('sc_','')+'-ni');
+        if(scSl)scSl.value=data.sl[k];
+        if(scNi)scNi.value=data.sl[k];
+      });
+    }
+    if(data.occ&&data.occ.length===5){
+      occArr=data.occ.slice();
+      occArr.forEach(function(v,i){
+        var sl=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=range]');
+        var ni=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=number]');
+        var vd=document.getElementById('ov-'+i);
+        if(sl)sl.value=v;
+        if(ni)ni.value=v;
+        if(vd)vd.textContent=v+'%';
+      });
+    }
+    return true;
+  }catch(e){return false;}
+}
+
+function resetAll(){
+  if(!confirm('Reset all sliders to default values?'))return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+// Show save indicator
+function showSaved(){
+  var ind=document.getElementById('save-ind');
+  if(!ind)return;
+  ind.style.opacity='1';
+  clearTimeout(ind._t);
+  ind._t=setTimeout(function(){ind.style.opacity='0'},1500);
+}
+
+// ===================== EXPORT / IMPORT =====================
+function exportSettings(){
+  try{
+    var data={sl:{},occ:occArr.slice(),version:'v9'};
+    Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
+    var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='nox_exhibition_settings.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }catch(e){alert('Export failed: '+e.message)}
+}
+
+function importSettings(evt){
+  var file=evt.target.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      if(data.sl){
+        Object.keys(data.sl).forEach(function(k){
+          SL[k]=data.sl[k];
+          var sl=document.getElementById('sl_'+k);
+          var ni=document.getElementById('ni_'+k);
+          if(sl)sl.value=data.sl[k];
+          if(ni)ni.value=data.sl[k];
+        });
+      }
+      if(data.occ&&data.occ.length===5){
+        occArr=data.occ.slice();
+        occArr.forEach(function(v,i){
+          var sl=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=range]');
+          var ni=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=number]');
+          var vd=document.getElementById('ov-'+i);
+          if(sl)sl.value=v;
+          if(ni)ni.value=v;
+          if(vd)vd.textContent=v+'%';
+        });
+      }
+      onUpdate();
+      saveToStorage();
+      var ind=document.getElementById('save-ind');
+      if(ind){ind.textContent='✓ Imported';ind.style.opacity='1';setTimeout(function(){ind.style.opacity='0';ind.textContent='✓ Saved'},2000)}
+    }catch(e){alert('Import failed — please use a valid NOX settings file.')}
+    evt.target.value='';
+  };
+  reader.readAsText(file);
+}
+
+// ===================== BOOT =====================
+initSliders();
+buildOcc();
+buildRentPerYear();
+buildAttachYrInputs();
+// localStorage disabled - defaults are hardcoded
+// loadFromStorage();
+onUpdate();
+setTimeout(function(){renderTab('dashboard')},50);
+setTimeout(function(){renderTab('dashboard')},300);
+
+// Auto-save on any change - patch onUpdate
+var _origOnUpdate=onUpdate;
+onUpdate=function(){
+  _origOnUpdate();
+  showSaved();
+};
+</script>
 </body>
 </html>
