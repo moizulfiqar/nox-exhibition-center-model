@@ -539,8 +539,8 @@ function buildOcc(){
       var note=document.createElement('div');note.style.cssText='font-size:10px;color:#9b9b97;margin-top:2px';note.textContent='from P&L model';
       box.appendChild(lbl);box.appendChild(vd);box.appendChild(note);
     } else {
-      var sl=document.createElement('input');sl.type='range';sl.min=0;sl.max=100;sl.step=1;sl.value=ov;
-      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.value=ov;
+      var sl=document.createElement('input');sl.type='range';sl.min=0;sl.max=100;sl.step=1;sl.value=ov;sl.id='occ_sl_'+idx;
+      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.value=ov;ni.id='occ_ni_'+idx;
       var vd=document.createElement('div');vd.className='ov';vd.id='ov-'+idx;vd.textContent=ov+'%';
       function sync(i){return function(v){occArr[i]=parseInt(v)||0;sl.value=v;ni.value=v;el('ov-'+i).textContent=occArr[i]+'%';onUpdate()}}
       sl.oninput=function(){sync(idx)(this.value)};
@@ -1159,7 +1159,7 @@ function buildAttachYrInputs(){
     row.appendChild(lbl);
     stream.arr.forEach(function(v,idx){
       var cell=document.createElement('div');
-      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=1;ni.value=v;
+      var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=1;ni.value=v;ni.id='attach_'+stream.label.replace(/ /g,'_')+'_'+idx;
       ni.style.cssText='width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 6px;font-size:12px;font-weight:500;text-align:center;background:#fff';
       ni.oninput=function(){stream.arr[idx]=parseInt(this.value)||0;onUpdate()};
       var pct=document.createElement('div');pct.style.cssText='font-size:10px;color:#9b9b97;text-align:center;margin-top:2px';pct.textContent='%';
@@ -1182,7 +1182,7 @@ function buildRentPerYear(){
     var lbl=document.createElement('div');
     lbl.style.cssText='font-size:11px;color:#6b6b68;margin-bottom:4px';
     lbl.textContent='Year '+(idx+1);
-    var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=0.5;ni.value=rv;
+    var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.step=0.5;ni.value=rv;ni.id='rent_ni_'+idx;
     ni.style.cssText='width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 6px;font-size:13px;font-weight:500;text-align:center;background:#fff';
     ni.oninput=function(){rentPerYear[idx]=parseFloat(this.value)||0;onUpdate()};
     box.appendChild(lbl);box.appendChild(ni);
@@ -1276,34 +1276,21 @@ function loadFromStorage(){
     var raw=localStorage.getItem(LS_KEY);
     if(!raw)return false;
     var data=JSON.parse(raw);
+    // Restore all SL values (sliders)
     if(data.sl){
       Object.keys(data.sl).forEach(function(k){
         SL[k]=data.sl[k];
-        var sl=document.getElementById('sl_'+k);
-        var ni=document.getElementById('ni_'+k);
-        if(sl)sl.value=data.sl[k];
-        if(ni)ni.value=data.sl[k];
-        // Also restore scenario sliders
-        var scSl=document.getElementById('sc-'+k.replace('sc_','')+'-sl');
-        var scNi=document.getElementById('sc-'+k.replace('sc_','')+'-ni');
-        if(scSl)scSl.value=data.sl[k];
-        if(scNi)scNi.value=data.sl[k];
       });
     }
+    // Restore occupancy rates
     if(data.occ&&data.occ.length===5){
       occArr=data.occ.slice();
-      occArr.forEach(function(v,i){
-        var sl=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=range]');
-        var ni=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=number]');
-        var vd=document.getElementById('ov-'+i);
-        if(sl)sl.value=v;
-        if(ni)ni.value=v;
-        if(vd)vd.textContent=v+'%';
-      });
     }
+    // Restore rent per year
     if(data.rentPerYear&&data.rentPerYear.length===5){
       rentPerYear=data.rentPerYear.slice();
     }
+    // Restore attachment rates
     if(data.chAttachYr&&data.chAttachYr.length===5){
       chAttachYr=data.chAttachYr.slice();
     }
@@ -1313,6 +1300,7 @@ function loadFromStorage(){
     if(data.acAttachYr&&data.acAttachYr.length===5){
       acAttachYr=data.acAttachYr.slice();
     }
+    // Restore net area
     if(data.netAreaYr&&data.netAreaYr.length===5){
       netAreaYr=data.netAreaYr.slice();
     }
@@ -1365,29 +1353,21 @@ function importSettings(evt){
   reader.onload=function(e){
     try{
       var data=JSON.parse(e.target.result);
+      // Restore all SL values
       if(data.sl){
         Object.keys(data.sl).forEach(function(k){
           SL[k]=data.sl[k];
-          var sl=document.getElementById('sl_'+k);
-          var ni=document.getElementById('ni_'+k);
-          if(sl)sl.value=data.sl[k];
-          if(ni)ni.value=data.sl[k];
         });
       }
+      // Restore occupancy rates
       if(data.occ&&data.occ.length===5){
         occArr=data.occ.slice();
-        occArr.forEach(function(v,i){
-          var sl=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=range]');
-          var ni=document.querySelector('#occ-inputs .occ-box:nth-child('+(i+1)+') input[type=number]');
-          var vd=document.getElementById('ov-'+i);
-          if(sl)sl.value=v;
-          if(ni)ni.value=v;
-          if(vd)vd.textContent=v+'%';
-        });
       }
+      // Restore rent per year
       if(data.rentPerYear&&data.rentPerYear.length===5){
         rentPerYear=data.rentPerYear.slice();
       }
+      // Restore attachment rates
       if(data.chAttachYr&&data.chAttachYr.length===5){
         chAttachYr=data.chAttachYr.slice();
       }
@@ -1397,9 +1377,14 @@ function importSettings(evt){
       if(data.acAttachYr&&data.acAttachYr.length===5){
         acAttachYr=data.acAttachYr.slice();
       }
+      // Restore net area
       if(data.netAreaYr&&data.netAreaYr.length===5){
         netAreaYr=data.netAreaYr.slice();
       }
+      // Rebuild all UI with imported values
+      buildOcc();
+      buildRentPerYear();
+      buildAttachYrInputs();
       onUpdate();
       saveToStorage();
       var ind=document.getElementById('save-ind');
