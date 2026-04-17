@@ -1308,6 +1308,36 @@ function loadFromStorage(){
   }catch(e){return false;}
 }
 
+function updateScenarioSliders(){
+  // Update scenario sliders from SL
+  var bearSl=document.getElementById('sc-bear-sl');
+  var bearNi=document.getElementById('sc-bear-ni');
+  if(bearSl)bearSl.value=SL['sc_bear']||25;
+  if(bearNi)bearNi.value=SL['sc_bear']||25;
+  
+  var baseSl=document.getElementById('sc-base-sl');
+  var baseNi=document.getElementById('sc-base-ni');
+  if(baseSl)baseSl.value=SL['sc_base']||33;
+  if(baseNi)baseNi.value=SL['sc_base']||33;
+  
+  var bullSl=document.getElementById('sc-bull-sl');
+  var bullNi=document.getElementById('sc-bull-ni');
+  if(bullSl)bullSl.value=SL['sc_bull']||85;
+  if(bullNi)bullNi.value=SL['sc_bull']||85;
+}
+
+function updateAllSliderUI(){
+  // Update all dynamically created sliders from SL
+  Object.keys(SL).forEach(function(k){
+    var slId='sl_'+k;
+    var niId='ni_'+k;
+    var sl=document.getElementById(slId);
+    var ni=document.getElementById(niId);
+    if(sl)sl.value=SL[k];
+    if(ni)ni.value=SL[k];
+  });
+}
+
 function resetAll(){
   if(!confirm('Reset all sliders to default values?'))return;
   localStorage.removeItem(LS_KEY);
@@ -1382,6 +1412,8 @@ function importSettings(evt){
         netAreaYr=data.netAreaYr.slice();
       }
       // Rebuild all UI with imported values
+      updateAllSliderUI();
+      updateScenarioSliders();
       buildOcc();
       buildRentPerYear();
       buildAttachYrInputs();
@@ -1401,6 +1433,8 @@ buildOcc();
 buildRentPerYear();
 buildAttachYrInputs();
 loadFromStorage();
+updateAllSliderUI();
+updateScenarioSliders();
 buildOcc();
 buildRentPerYear();
 buildAttachYrInputs();
