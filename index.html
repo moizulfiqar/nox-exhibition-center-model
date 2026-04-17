@@ -504,8 +504,8 @@ function mkSl(cid,key,label,mn,mx,step,def){
   ll.innerHTML='<span>'+label+'</span>';
   w.appendChild(ll);
   var sw=document.createElement('div');sw.className='slw';
-  var sl=document.createElement('input');sl.type='range';sl.min=mn;sl.max=mx;sl.step=step;sl.value=def;
-  var ni=document.createElement('input');ni.type='number';ni.min=mn;ni.max=mx;ni.step=step;ni.value=def;
+  var sl=document.createElement('input');sl.type='range';sl.min=mn;sl.max=mx;sl.step=step;sl.value=def;sl.id='sl_'+key;
+  var ni=document.createElement('input');ni.type='number';ni.min=mn;ni.max=mx;ni.step=step;ni.value=def;ni.id='ni_'+key;
   function sync(v){SL[key]=parseFloat(v);sl.value=v;ni.value=v;
     // Keep base scenario in sync with main util
     if(key==='util'){
@@ -1416,6 +1416,7 @@ buildOcc();
 buildRentPerYear();
 buildAttachYrInputs();
 loadFromStorage();
+buildOcc();
 buildRentPerYear();
 buildAttachYrInputs();
 onUpdate();
