@@ -1255,7 +1255,15 @@ var LS_KEY='nox_ec_v9';
 
 function saveToStorage(){
   try{
-    var data={sl:{},occ:occArr.slice()};
+    var data={
+      sl:{},
+      occ:occArr.slice(),
+      rentPerYear:rentPerYear.slice(),
+      chAttachYr:chAttachYr.slice(),
+      rcAttachYr:rcAttachYr.slice(),
+      acAttachYr:acAttachYr.slice(),
+      netAreaYr:netAreaYr.slice()
+    };
     Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
     localStorage.setItem(LS_KEY,JSON.stringify(data));
   }catch(e){}
@@ -1291,6 +1299,21 @@ function loadFromStorage(){
         if(vd)vd.textContent=v+'%';
       });
     }
+    if(data.rentPerYear&&data.rentPerYear.length===5){
+      rentPerYear=data.rentPerYear.slice();
+    }
+    if(data.chAttachYr&&data.chAttachYr.length===5){
+      chAttachYr=data.chAttachYr.slice();
+    }
+    if(data.rcAttachYr&&data.rcAttachYr.length===5){
+      rcAttachYr=data.rcAttachYr.slice();
+    }
+    if(data.acAttachYr&&data.acAttachYr.length===5){
+      acAttachYr=data.acAttachYr.slice();
+    }
+    if(data.netAreaYr&&data.netAreaYr.length===5){
+      netAreaYr=data.netAreaYr.slice();
+    }
     return true;
   }catch(e){return false;}
 }
@@ -1313,7 +1336,16 @@ function showSaved(){
 // ===================== EXPORT / IMPORT =====================
 function exportSettings(){
   try{
-    var data={sl:{},occ:occArr.slice(),version:'v9'};
+    var data={
+      sl:{},
+      occ:occArr.slice(),
+      rentPerYear:rentPerYear.slice(),
+      chAttachYr:chAttachYr.slice(),
+      rcAttachYr:rcAttachYr.slice(),
+      acAttachYr:acAttachYr.slice(),
+      netAreaYr:netAreaYr.slice(),
+      version:'v9'
+    };
     Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
     var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     var a=document.createElement('a');
@@ -1351,6 +1383,21 @@ function importSettings(evt){
           if(vd)vd.textContent=v+'%';
         });
       }
+      if(data.rentPerYear&&data.rentPerYear.length===5){
+        rentPerYear=data.rentPerYear.slice();
+      }
+      if(data.chAttachYr&&data.chAttachYr.length===5){
+        chAttachYr=data.chAttachYr.slice();
+      }
+      if(data.rcAttachYr&&data.rcAttachYr.length===5){
+        rcAttachYr=data.rcAttachYr.slice();
+      }
+      if(data.acAttachYr&&data.acAttachYr.length===5){
+        acAttachYr=data.acAttachYr.slice();
+      }
+      if(data.netAreaYr&&data.netAreaYr.length===5){
+        netAreaYr=data.netAreaYr.slice();
+      }
       onUpdate();
       saveToStorage();
       var ind=document.getElementById('save-ind');
@@ -1366,8 +1413,9 @@ initSliders();
 buildOcc();
 buildRentPerYear();
 buildAttachYrInputs();
-// localStorage disabled - defaults are hardcoded
-// loadFromStorage();
+loadFromStorage();
+buildRentPerYear();
+buildAttachYrInputs();
 onUpdate();
 setTimeout(function(){renderTab('dashboard')},50);
 setTimeout(function(){renderTab('dashboard')},300);
@@ -1376,6 +1424,7 @@ setTimeout(function(){renderTab('dashboard')},300);
 var _origOnUpdate=onUpdate;
 onUpdate=function(){
   _origOnUpdate();
+  saveToStorage();
   showSaved();
 };
 </script>
