@@ -114,10 +114,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .app-sub{font-size:12px;color:#9b9b97;font-weight:400;line-height:1.3}
 @media(max-width:520px){.app-logo{height:36px;max-width:min(180px,50vw)}.app-title{font-size:1rem}}
 @media(max-width:900px){.mlayout{flex-direction:column}.ml{width:100%}.two-col{grid-template-columns:1fr}}
+body.locked{overflow:hidden}
 </style>
 <link rel="icon" href="NOX-Group-logo.png" type="image/png">
 </head>
-<body>
+<body class="locked">
+<div id="login-overlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#1a1a18;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:1.5rem">
+  <img src="NOX-Group-logo.png" alt="NOX" style="height:60px;margin-bottom:2rem;max-width:100%;object-fit:contain">
+  <div style="background:#fff;padding:2rem;border-radius:12px;width:100%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,0.5)">
+    <div style="font-size:18px;font-weight:600;margin-bottom:1.5rem;color:#1a1a18;text-align:center">Superuser Login</div>
+    <div style="margin-bottom:1rem">
+      <label style="display:block;font-size:12px;color:#6b6b68;margin-bottom:4px">Email</label>
+      <input type="email" id="login-email" style="width:100%;padding:10px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;font-size:14px" placeholder="Enter email">
+    </div>
+    <div style="margin-bottom:1.5rem">
+      <label style="display:block;font-size:12px;color:#6b6b68;margin-bottom:4px">Password</label>
+      <input type="password" id="login-pass" autocomplete="current-password" style="width:100%;padding:10px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;font-size:14px" placeholder="Enter password">
+    </div>
+    <div id="login-err" style="color:#A32D2D;font-size:12px;margin-bottom:1rem;display:none;text-align:center">Invalid credentials. Access denied.</div>
+    <button onclick="attemptLogin()" style="width:100%;padding:10px;background:#185FA5;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.2s" onmouseover="this.style.background='#134a83'" onmouseout="this.style.background='#185FA5'">Sign In</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(sessionStorage.getItem('nox_auth') === '1') {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.body.classList.remove('locked');
+  } else {
+    document.getElementById('login-overlay').style.display = 'flex';
+    document.body.classList.add('locked');
+  }
+  document.addEventListener('keydown', function(evt){
+    if(evt.key==='Enter' && document.getElementById('login-overlay').style.display !== 'none') {
+      attemptLogin();
+    }
+  });
+})();
+function attemptLogin() {
+  var e = document.getElementById('login-email').value.trim().toLowerCase();
+  var p = document.getElementById('login-pass').value;
+  var validEmails = ['k.shallwani@noxksa.com', 'ceo@noxksa.com'];
+  if(validEmails.indexOf(e) > -1 && p === 'Noxksa123') {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.body.classList.remove('locked');
+    sessionStorage.setItem('nox_auth', '1');
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+</script>
 <header class="app-header" role="banner">
   <div class="shell app-header-inner">
     <a class="app-brand" href="./" aria-label="NOX Exhibition Center — home">
@@ -1430,9 +1475,30 @@ function flashEl(id) {
   }, 50);
 }
 
+function getStateStr(){
+  try{
+    var data={
+      sl:{},
+      occ:occArr.slice(),
+      rentPerYear:rentPerYear.slice(),
+      chAttachYr:chAttachYr.slice(),
+      rcAttachYr:rcAttachYr.slice(),
+      acAttachYr:acAttachYr.slice(),
+      netAreaYr:netAreaYr.slice()
+    };
+    Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
+    return JSON.stringify(data);
+  }catch(e){return;}
+}
+
 function performUndo(){
   if(undoStack.length===0)return;
-  var state=undoStack.pop();
+  var curStr = getStateStr();
+  var state = undoStack.pop();
+  while(state === curStr && undoStack.length > 0){
+    state = undoStack.pop();
+  }
+  if(state === curStr) return;
   try{
     isUndoing=true;
     var data=JSON.parse(state);
