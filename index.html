@@ -120,7 +120,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <span class="app-sub">Unit economics model</span>
       </div>
     </a>
-    <div class="app-version">v1</div>
+    <div class="app-version">v2</div>
   </div>
 </header>
 <div class="tabs" id="tab-bar">
@@ -132,6 +132,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <button class="tab" data-tab="cashflow">Cash Flow</button>
   <button class="tab" onclick="exportSettings()" style="margin-left:auto;color:#9b9b97;font-size:12px">&#8595; Export</button>
   <label class="tab" style="cursor:pointer;color:#9b9b97;font-size:12px">&#8593; Import<input type="file" accept=".json" onchange="importSettings(event)" style="display:none"></label>
+  <button class="tab" onclick="performUndo()" id="btn-undo" style="display:none;color:#185FA5;font-size:12px">&#10554; Undo</button>
   <button class="tab" onclick="resetAll()" style="color:#E24B4A;font-size:12px">Reset</button>
   <div id="save-ind" style="display:flex;align-items:center;padding:0 1rem;font-size:11px;color:#9b9b97;opacity:0;transition:opacity .3s">&#10003; Saved</div>
 </div>
@@ -542,7 +543,13 @@ function buildOcc(){
       var sl=document.createElement('input');sl.type='range';sl.min=0;sl.max=100;sl.step=1;sl.value=ov;sl.id='occ_sl_'+idx;
       var ni=document.createElement('input');ni.type='number';ni.min=0;ni.max=100;ni.value=ov;ni.id='occ_ni_'+idx;
       var vd=document.createElement('div');vd.className='ov';vd.id='ov-'+idx;vd.textContent=ov+'%';
-      function sync(i){return function(v){occArr[i]=parseInt(v)||0;sl.value=v;ni.value=v;el('ov-'+i).textContent=occArr[i]+'%';onUpdate()}}
+      function sync(i){return function(v){
+        occArr[i]=parseInt(v)||0;
+        var s=document.getElementById('occ_sl_'+i); if(s) s.value=v;
+        var n=document.getElementById('occ_ni_'+i); if(n) n.value=v;
+        var o=document.getElementById('ov-'+i); if(o) o.textContent=occArr[i]+'%';
+        onUpdate();
+      }}
       sl.oninput=function(){sync(idx)(this.value)};
       ni.onchange=function(){sync(idx)(Math.min(100,Math.max(0,parseInt(this.value)||0)))};
       box.appendChild(lbl);box.appendChild(sl);box.appendChild(ni);
@@ -1352,6 +1359,62 @@ function showSaved(){
   clearTimeout(ind._t);
   ind._t=setTimeout(function(){ind.style.opacity='0'},1500);
 }
+
+var undoStack=[];
+var isUndoing=false;
+function saveToUndo(){
+  if(isUndoing) return;
+  try{
+    var data={
+      sl:{},
+      occ:occArr.slice(),
+      rentPerYear:rentPerYear.slice(),
+      chAttachYr:chAttachYr.slice(),
+      rcAttachYr:rcAttachYr.slice(),
+      acAttachYr:acAttachYr.slice(),
+      netAreaYr:netAreaYr.slice()
+    };
+    Object.keys(SL).forEach(function(k){data.sl[k]=SL[k]});
+    var state=JSON.stringify(data);
+    if(undoStack.length===0 || undoStack[undoStack.length-1]!==state){
+      undoStack.push(state);
+      if(undoStack.length>50)undoStack.shift();
+      var b=el('btn-undo');if(b)b.style.display='inline-block';
+    }
+  }catch(e){}
+}
+
+function performUndo(){
+  if(undoStack.length===0)return;
+  var state=undoStack.pop();
+  try{
+    isUndoing=true;
+    var data=JSON.parse(state);
+    if(data.sl){Object.keys(data.sl).forEach(function(k){SL[k]=data.sl[k];});}
+    if(data.occ)occArr=data.occ.slice();
+    if(data.rentPerYear)rentPerYear=data.rentPerYear.slice();
+    if(data.chAttachYr)chAttachYr=data.chAttachYr.slice();
+    if(data.rcAttachYr)rcAttachYr=data.rcAttachYr.slice();
+    if(data.acAttachYr)acAttachYr=data.acAttachYr.slice();
+    if(data.netAreaYr)netAreaYr=data.netAreaYr.slice();
+    
+    updateAllSliderUI();
+    updateScenarioSliders();
+    buildOcc();
+    buildRentPerYear();
+    buildAttachYrInputs();
+    onUpdate(); // this handles storage save as well
+    var b=el('btn-undo');if(b)b.style.display=undoStack.length>0?'inline-block':'none';
+    isUndoing=false;
+  }catch(e){isUndoing=false;}
+}
+
+document.addEventListener('pointerdown',function(e){
+  if(e.target.tagName==='INPUT'&&(e.target.type==='range'||e.target.type==='number')){saveToUndo()}
+},true);
+document.addEventListener('focusin',function(e){
+  if(e.target.tagName==='INPUT'&&(e.target.type==='range'||e.target.type==='number')){saveToUndo()}
+},true);
 
 // ===================== EXPORT / IMPORT =====================
 function exportSettings(){
