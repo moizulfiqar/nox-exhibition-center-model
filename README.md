@@ -11,7 +11,7 @@ A simple **browser-based financial model** for an exhibition venue. Everything r
 - **Real Estate** — Rent, efficiency, benchmarks against sample venues.
 - **Cash Flow** — Monthly and annual cash views for the first years.
 
-Assumptions are **not** sent to a server; all calculations run in your browser. You can **Export** settings as JSON and **Import** them again (see `nox_exhibition_settings-2.json` for an example bundle).
+Assumptions are **not** sent to a server; all calculations run in your browser. You can **Export** settings as JSON and **Import** them again.
 
 ## How to run it locally
 
@@ -28,6 +28,6 @@ This repo is static: **`index.html`** at the project root, plus **`NOX-Group-log
 
 | File | Role |
 |------|------|
-| `index.html` | Main app (same model as `nox_exhibition_center_v9_7.html`, with header branding). |
+| `index.html` | Main app |
 | `NOX-Group-logo.png` | Logo used in the header and favicon. |
-| `nox_exhibition_settings-2.json` | Example exported scenario (import via the app). |
+| `settings.json` | Example exported scenario (import via the app). |
