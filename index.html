@@ -11,6 +11,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab{padding:.6rem 1.2rem;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:500;color:#9b9b97;background:transparent;border:none;transition:all .2s}
 .tab:hover{color:#fff}
 .tab.active{background:#f0efe9;color:#1a1a18}
+.action-box{display:flex;align-items:center;gap:8px;margin-left:auto;padding:0 8px 6px 0}
+.btn-util{padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;border:1px solid rgba(0,0,0,0.1);background:#fff;transition:all .2s;color:#6b6b68;display:flex;align-items:center;gap:4px;}
+.btn-util:hover{background:#f5f4f0;color:#1a1a18;}
+.btn-util.danger{color:#E24B4A;}
+.btn-util.danger:hover{background:#FCEAEA;}
+.btn-util.primary{color:#185FA5;}
+.btn-util.primary:hover{background:#E6F1FB;}
 .tc{display:none;padding:1.5rem}
 .tc.active{display:block}
 .shell{max-width:1400px;margin:0 auto}
@@ -130,11 +137,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <button class="tab" data-tab="forecast">5-Year Forecast</button>
   <button class="tab" data-tab="realestate">Real Estate</button>
   <button class="tab" data-tab="cashflow">Cash Flow</button>
-  <button class="tab" onclick="exportSettings()" style="margin-left:auto;color:#9b9b97;font-size:12px">&#8595; Export</button>
-  <label class="tab" style="cursor:pointer;color:#9b9b97;font-size:12px">&#8593; Import<input type="file" accept=".json" onchange="importSettings(event)" style="display:none"></label>
-  <button class="tab" onclick="performUndo()" id="btn-undo" style="display:none;color:#185FA5;font-size:12px">&#10554; Undo</button>
-  <button class="tab" onclick="resetAll()" style="color:#E24B4A;font-size:12px">Reset</button>
-  <div id="save-ind" style="display:flex;align-items:center;padding:0 1rem;font-size:11px;color:#9b9b97;opacity:0;transition:opacity .3s">&#10003; Saved</div>
+  <div class="action-box">
+    <button class="btn-util" onclick="exportSettings()">&#8595; Export</button>
+    <label class="btn-util" style="cursor:pointer">&#8593; Import<input type="file" accept=".json" onchange="importSettings(event)" style="display:none"></label>
+    <button class="btn-util primary" onclick="performUndo()" id="btn-undo" style="display:none;">&#10554; Undo</button>
+    <button class="btn-util danger" onclick="resetAll()">Reset</button>
+    <div id="save-ind" style="display:flex;align-items:center;padding-left:4px;font-size:11px;color:#9b9b97;opacity:0;transition:opacity .3s">&#10003; Saved</div>
+  </div>
 </div>
 
 <!-- DASHBOARD -->
@@ -1384,12 +1393,51 @@ function saveToUndo(){
   }catch(e){}
 }
 
+function getChangedId(data){
+  if(data.sl){for(var k in data.sl){if(data.sl[k]!==SL[k]) return 'sl_'+k;}}
+  if(data.occ){for(var i=0;i<5;i++){if(data.occ[i]!==occArr[i]) return 'occ_sl_'+i;}}
+  if(data.rentPerYear){for(var i=0;i<5;i++){if(data.rentPerYear[i]!==rentPerYear[i]) return 'rentPerYear_sl_'+i;}}
+  if(data.chAttachYr){for(var i=0;i<5;i++){if(data.chAttachYr[i]!==chAttachYr[i]) return 'chAttachYr_sl_'+i;}}
+  if(data.rcAttachYr){for(var i=0;i<5;i++){if(data.rcAttachYr[i]!==rcAttachYr[i]) return 'rcAttachYr_sl_'+i;}}
+  if(data.acAttachYr){for(var i=0;i<5;i++){if(data.acAttachYr[i]!==acAttachYr[i]) return 'acAttachYr_sl_'+i;}}
+  if(data.netAreaYr){for(var i=0;i<5;i++){if(data.netAreaYr[i]!==netAreaYr[i]) return 'netAreaYr_sl_'+i;}}
+  return null;
+}
+
+function flashEl(id) {
+  var el = document.getElementById(id);
+  if(!el) return;
+  // switch tab if needed
+  var tc = el.closest('.tc');
+  if(tc && !tc.classList.contains('active')){
+     var tabId = tc.id.replace('tc-','');
+     var tBtn = document.querySelector('.tab[data-tab="'+tabId+'"]');
+     if(tBtn) tBtn.click();
+  }
+  setTimeout(function(){
+    el.scrollIntoView({behavior: 'smooth', block: 'center'});
+    var p = el.closest('.panel');
+    if(p) {
+      p.style.transition = 'box-shadow 0.3s, background 0.3s';
+      var obg = p.style.background || '#fff';
+      p.style.boxShadow = '0 0 0 2px #185FA5';
+      p.style.background = '#f0f5fb';
+      setTimeout(function(){
+        p.style.boxShadow = '';
+        p.style.background = obg;
+      }, 700);
+    }
+  }, 50);
+}
+
 function performUndo(){
   if(undoStack.length===0)return;
   var state=undoStack.pop();
   try{
     isUndoing=true;
     var data=JSON.parse(state);
+    var changedId = getChangedId(data);
+    
     if(data.sl){Object.keys(data.sl).forEach(function(k){SL[k]=data.sl[k];});}
     if(data.occ)occArr=data.occ.slice();
     if(data.rentPerYear)rentPerYear=data.rentPerYear.slice();
@@ -1406,6 +1454,8 @@ function performUndo(){
     onUpdate(); // this handles storage save as well
     var b=el('btn-undo');if(b)b.style.display=undoStack.length>0?'inline-block':'none';
     isUndoing=false;
+    
+    if(changedId) flashEl(changedId);
   }catch(e){isUndoing=false;}
 }
 
