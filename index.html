@@ -122,7 +122,7 @@ body.locked{overflow:hidden}
 <div id="login-overlay" style="position:fixed;top:0;left:0;right:0;bottom:0;background:#1a1a18;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:1.5rem">
   <img src="NOX-Group-logo.png" alt="NOX" style="height:60px;margin-bottom:2rem;max-width:100%;object-fit:contain">
   <div style="background:#fff;padding:2rem;border-radius:12px;width:100%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,0.5)">
-    <div style="font-size:18px;font-weight:600;margin-bottom:1.5rem;color:#1a1a18;text-align:center">Superuser Login</div>
+    <div style="font-size:18px;font-weight:600;margin-bottom:1.5rem;color:#1a1a18;text-align:center">Login</div>
     <div style="margin-bottom:1rem">
       <label style="display:block;font-size:12px;color:#6b6b68;margin-bottom:4px">Email</label>
       <input type="email" id="login-email" style="width:100%;padding:10px;border:1px solid rgba(0,0,0,0.15);border-radius:6px;font-size:14px" placeholder="Enter email">
@@ -137,13 +137,21 @@ body.locked{overflow:hidden}
 </div>
 <script>
 (function(){
-  if(sessionStorage.getItem('nox_auth') === '1') {
-    document.getElementById('login-overlay').style.display = 'none';
-    document.body.classList.remove('locked');
-  } else {
-    document.getElementById('login-overlay').style.display = 'flex';
-    document.body.classList.add('locked');
-  }
+  // Run after DOM loads so user-role-display is available, but hide immediately
+  document.addEventListener("DOMContentLoaded", function() {
+    if(sessionStorage.getItem('nox_auth') === '1') {
+      document.getElementById('login-overlay').style.display = 'none';
+      document.body.classList.remove('locked');
+      var roleDisplay = document.getElementById('user-role-display');
+      if(roleDisplay) {
+         roleDisplay.textContent = sessionStorage.getItem('nox_auth_role') === 'CEO' ? 'CEO' : 'Growth Manager';
+      }
+    } else {
+      document.getElementById('login-overlay').style.display = 'flex';
+      document.body.classList.add('locked');
+    }
+  });
+
   document.addEventListener('keydown', function(evt){
     if(evt.key==='Enter' && document.getElementById('login-overlay').style.display !== 'none') {
       attemptLogin();
@@ -158,9 +166,25 @@ function attemptLogin() {
     document.getElementById('login-overlay').style.display = 'none';
     document.body.classList.remove('locked');
     sessionStorage.setItem('nox_auth', '1');
+    var isCeo = (e === 'ceo@noxksa.com');
+    var roleName = isCeo ? 'CEO' : 'Growth Manager';
+    sessionStorage.setItem('nox_auth_role', roleName);
+    var roleDisplay = document.getElementById('user-role-display');
+    if(roleDisplay) {
+       roleDisplay.textContent = roleName;
+    }
   } else {
     document.getElementById('login-err').style.display = 'block';
   }
+}
+function performLogout() {
+  sessionStorage.removeItem('nox_auth');
+  sessionStorage.removeItem('nox_auth_role');
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-err').style.display = 'none';
+  document.getElementById('login-overlay').style.display = 'flex';
+  document.body.classList.add('locked');
 }
 </script>
 <header class="app-header" role="banner">
@@ -172,7 +196,13 @@ function attemptLogin() {
         <span class="app-sub">Unit economics model</span>
       </div>
     </a>
-    <div class="app-version">v3</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:1.5rem">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+        <span style="font-size:12px;font-weight:600;color:#fff" id="user-role-display">Superuser</span>
+        <span class="app-version" style="margin-left:0">v3</span>
+      </div>
+      <button onclick="performLogout()" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='transparent'">Logout</button>
+    </div>
   </div>
 </header>
 <div class="tabs" id="tab-bar">
